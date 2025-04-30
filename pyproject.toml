@@ -57,8 +57,9 @@ platforms = ["linux-64"]
 pypi-dependencies = {aiida-fans = { path = ".", editable = true }}
 [tool.pixi.feature.plugin]
 dependencies = {aiida-fans = "0.1.5"}
-# [tool.pixi.feature.aiida]
-# dependencies = {aiida-core = "2.6.*"}
+[tool.pixi.feature.aiida]
+dependencies = {"aiida-core.services" = "2.*"}
+tasks = {start = "rabbitmq-server -detached", stop = "rabbitmqctl stop"}
 [tool.pixi.feature.fans]
 dependencies = {fans = "0.3.*"}
 [tool.pixi.feature.ruff]
@@ -92,7 +93,7 @@ docs = { features = ["sphinx", "py312"], no-default-feature = true }
 test-py311 = { features = ["self", "fans", "pytest", "py311"], solve-group = "py311" }
 test-py312 = { features = ["self", "fans", "pytest", "py312"], solve-group = "py312" }
 # test-py313 = { features = ["self", "fans", "pytest", "py313"], solve-group = "py313" }
-tutorial = { features = ["plugin", "fans", "marimo"], no-default-feature = true}
+tutorial = { features = ["plugin", "aiida", "fans", "marimo"], no-default-feature = true}
 
 
 ## Build Tools: setuptools_scm
