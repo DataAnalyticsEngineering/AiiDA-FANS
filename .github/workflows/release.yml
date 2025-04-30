@@ -17,7 +17,7 @@ jobs:
         with:
           pixi-version: v0.40.2
           cache: false
-          environments: build
+          environments: dist
           activate-environment: true
       - name: Build distributions
         run: pixi run build-dist
