@@ -11,7 +11,7 @@ classifiers = [
     "Programming Language :: Python",
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Development Status :: 3 - Alpha",
     "Framework :: AiiDA"
 ]
