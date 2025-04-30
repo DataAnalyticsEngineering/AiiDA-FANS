@@ -101,7 +101,10 @@ version_file = "src/aiida_fans/_version.py"
 
 ## Style Tools: ruff
 [tool.ruff]
-extend-exclude = ["conf.py"]
+extend-exclude = [
+    "conf.py",
+    "tutorial.py"
+]
 line-length = 120
 [tool.ruff.lint]
 ignore = [
