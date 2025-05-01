@@ -1,10 +1,11 @@
 """Calculations provided by aiida_fans."""
 
 from json import dump
+from pathlib import Path
 from typing import Any, Callable
 
 import h5py
-from aiida.common.datastructures import CalcInfo, CodeInfo
+from aiida.common.datastructures import CalcInfo, CodeInfo, StashMode
 from aiida.common.folders import Folder
 from aiida.engine import CalcJob
 from aiida.engine.processes.process_spec import CalcJobProcessSpec
@@ -13,6 +14,22 @@ from plumpy.utils import AttributesFrozendict
 
 from aiida_fans.helpers import InputEncoder
 
+
+class FansFragmentedCalculation(CalcJob):
+    """AiiDA calculation plugin wrapping the FANS executable.
+
+    The microstructure file is fragmented as necessary by individual jobs,
+    copying the relevant dataset to the working directory.
+    """
+    pass
+
+class FansStashedCalculation(CalcJob):
+    """AiiDA calculation plugin wrapping the FANS executable.
+
+    The microstructure file is stashed on the working machine in a consistent
+    location and read by many jobs at once.
+    """
+    pass
 
 class FANSCalculation(CalcJob):
     """AiiDA calculation plugin wrapping the FANS executable."""
@@ -73,6 +90,15 @@ class FANSCalculation(CalcJob):
         spec.inputs["metadata"]["options"]["parser_name"].default = "fans"
         spec.inputs["metadata"]["options"]["input_filename"].default = "input.json"
         spec.inputs["metadata"]["options"]["output_filename"].default = "output.h5"
+        ## Stash
+        spec.inputs["metadata"]["options"]["stash"].default = {
+            "source_list": "microstructure.h5",
+            "target_base": str(Path.home()) + "/aiida_stash/" + spec.inputs["microstructure"]["datasetname"].value,
+            "stash_mode": StashMode.COPY.value,
+        }
+        # spec.inputs["metadata"]["options"]["stash"]["source_list"].default = "?"
+        # spec.inputs["metadata"]["options"]["stash"]["target_base"].default = "?"
+        # spec.inputs["metadata"]["options"]["stash"]["stash_mode"].default = StashMode
 
         # New Ports:
         spec.input_namespace("microstructure", help=(note := "The microstructure definition."))
