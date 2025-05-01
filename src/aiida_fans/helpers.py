@@ -1,4 +1,4 @@
-"""Tools and utilities required by aiida_fans."""
+"""Tools required by aiida_fans."""
 
 import json
 
