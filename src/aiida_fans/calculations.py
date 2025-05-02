@@ -2,6 +2,7 @@
 
 from json import dump
 from pathlib import Path
+from shutil import copyfileobj
 from typing import Any, Callable
 
 import h5py
@@ -29,9 +30,103 @@ class FansStashedCalculation(CalcJob):
     The microstructure file is stashed on the working machine in a consistent
     location and read by many jobs at once.
     """
-    pass
 
-class FANSCalculation(CalcJob):
+    @classmethod
+    def define(cls, spec: CalcJobProcessSpec) -> None:
+        """Define inputs, outputs, and exit_codes of the calculation."""
+        super().define(spec)
+
+        # Metadata
+        spec.inputs["metadata"]["options"]["resources"].default = {
+            "num_machines": 1,
+            "num_mpiprocs_per_machine": 4,
+        }
+        spec.inputs["metadata"]["options"]["withmpi"].default = True
+        spec.inputs["metadata"]["options"]["parser_name"].default = "fans"
+        spec.inputs["metadata"]["options"]["input_filename"].default = "input.json"
+        spec.inputs["metadata"]["options"]["output_filename"].default = "output.h5"
+
+        # Ports
+        spec.input_namespace("microstructure")
+        spec.input("microstructure.file", valid_type=SinglefileData)
+        spec.input("microstructure.datasetname", valid_type=Str)
+        spec.input("microstructure.L", valid_type=List)
+        spec.input("problem_type", valid_type=Str)
+        spec.input("matmodel", valid_type=Str)
+        spec.input("material_properties", valid_type=Dict)
+        spec.input("method", valid_type=Str)
+        spec.input_namespace("error_parameters")
+        spec.input("error_parameters.measure", valid_type=Str)
+        spec.input("error_parameters.type", valid_type=Str)
+        spec.input("error_parameters.tolerance", valid_type=Float)
+        spec.input("n_it", valid_type=Int)
+        spec.input("macroscale_loading", valid_type=ArrayData)
+        spec.input("results", valid_type=List)
+
+        spec.output("results", valid_type=SinglefileData)
+
+        spec.exit_code(400, "PLACEHOLDER", "This is an error code, yet to be implemented.")
+
+    def prepare_for_submission(self, folder: Folder) -> CalcInfo:
+        """Prepare the calcjob for submission."""
+        # locating/stashing the microstucture file
+        ms_filename: str = self.inputs.microstructure.file.filename
+        ms_filepath: Path = Path(self.inputs.code.computer.get_workdir()) / "stash/microstructures" / ms_filename
+
+        if not ms_filepath.is_file():
+            ms_filepath.parent.mkdir(parents=True, exist_ok=True)
+            with self.inputs.microstructure.file.open(mode='rb') as source:
+                with ms_filepath.open(mode='wb') as target:
+                    copyfileobj(source, target)
+
+        assert ms_filepath.is_file()
+
+        json_to_be = {
+            "ms_filename": str(ms_filepath),
+            "ms_datasetname": self.inputs.microstructure.datasetname.value,
+            "ms_L": self.inputs.microstructure.L.get_list(),
+            "problem_type": self.inputs.problem_type.value,
+            "matmodel": self.inputs.matmodel.value,
+            "material_properties": self.inputs.material_properties.get_dict(),
+            "method": self.inputs.method.value,
+            "error_parameters": {
+                "measure": self.inputs.error_parameters.measure.value,
+                "type": self.inputs.error_parameters.type.value,
+                "tolerance": self.inputs.error_parameters.tolerance.value
+            },
+            "n_it": self.inputs.n_it.value,
+            "macroscale_loading": [a[1].tolist() for a in self.inputs.macroscale_loading.get_iterarrays()],
+            "results": self.inputs.results.get_list()
+        }
+
+        with folder.open(self.options.input_filename, "w", "utf8") as dest:
+            dump(json_to_be, dest, indent=4)
+
+        # Specifying code info.
+        codeinfo = CodeInfo()
+        codeinfo.code_uuid = self.inputs.code.uuid
+        codeinfo.stdout_name = self.options.input_filename + ".log"
+        codeinfo.stderr_name = self.options.input_filename + ".err"
+        codeinfo.cmdline_params = [self.options.input_filename, self.options.output_filename]
+
+        # Specifying calc info.
+        calcinfo = CalcInfo()
+        calcinfo.codes_info = [codeinfo]
+        calcinfo.local_copy_list = []
+        calcinfo.remote_copy_list = []
+        calcinfo.retrieve_list = [
+            self.options.input_filename + ".log",
+            self.options.input_filename + ".err",
+        ]
+        calcinfo.retrieve_temporary_list = [
+            self.options.output_filename
+        ]
+
+        return calcinfo
+
+
+
+class FansCalculation(CalcJob):
     """AiiDA calculation plugin wrapping the FANS executable."""
 
     @staticmethod
