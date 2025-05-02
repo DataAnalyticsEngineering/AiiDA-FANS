@@ -23,11 +23,16 @@ dependencies = [
 ]
 
 # Entry Points
-[project.entry-points]
-"aiida.data" = { "fans" = "aiida_fans.data:FANSParameters" }
-"aiida.calculations" = { "fans" = "aiida_fans.calculations:FANSCalculation" }
-"aiida.parsers" = { "fans" = "aiida_fans.parsers:FANSParser" }
-"aiida.cmdline.data" = { "fans" = "aiida_fans.cli:data_cli" }
+[project.entry-points."aiida.data"]
+"fans" = "aiida_fans.data:FANSParameters"
+[project.entry-points."aiida.calculations"]
+"fans" = "aiida_fans.calculations:FansCalculation"
+"fans.fragmented" = "aiida_fans.calculations:FansFragmentedCalculation"
+"fans.stashed" = "aiida_fans.calculations:FansStashedCalculation"
+[project.entry-points."aiida.parsers"]
+"fans" = "aiida_fans.parsers:FANSParser"
+[project.entry-points."aiida.cmdline.data"]
+"fans" = "aiida_fans.cli:data_cli"
 
 # Build System
 [build-system]
