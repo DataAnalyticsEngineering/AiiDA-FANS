@@ -1,19 +1,121 @@
 """Utilities provided by aiida_fans."""
 
-from pathlib import Path
 from typing import Any, Literal
 
-from aiida.common.datastructures import StashMode
-from aiida.engine import submit, run
-from aiida.orm import load_node
-from aiida.plugins import CalculationFactory
+from aiida.engine import run, submit
+from aiida.orm import CalcJobNode, Data, Node, QueryBuilder
+from aiida.plugins import CalculationFactory, DataFactory
+from numpy import ndarray
 
-# load_node(label="microstructure")
+
+def aiida_type(value : Any) -> type[Data]:
+    """Find the corresponding AiiDA datatype for a variable with pythonic type.
+
+    Args:
+        value (Any): a python variable
+
+    Raises:
+        NotImplementedError: only certain mappings are supported
+
+    Returns:
+        type[Data]: an AiiDA data type
+    """
+    match value:
+        case str():
+            return DataFactory("core.str") # Str
+        case int():
+            return DataFactory("core.int") # Int
+        case float():
+            return DataFactory("core.float") # Float
+        case list():
+            return DataFactory("core.list") # List
+        case dict():
+            if all(map(lambda t: isinstance(t, ndarray), value.values())):
+                return DataFactory("core.array") # ArrayData
+            else:
+                return DataFactory("core.dict") # Dict
+        case _:
+            raise NotImplementedError
+
+def fetch(label : str, value : Any) -> list[Node]:
+    """Return a list of nodes matching the label and value provided.
+
+    Args:
+        label (str): the label of the node to fetch
+        value (Any): the value of the node to fetch
+
+    Returns:
+        list[Node]: the list of nodes matching the give criteria
+    """
+    datatype = aiida_type(value)
+    return QueryBuilder(
+    ).append(cls=datatype, tag="n"
+    ).add_filter("n", {"label": label}
+    ).add_filter("n", {"attributes": {"==": datatype(value).base.attributes.all}}
+    ).all(flat=True) # type: ignore
+
+def generate(label : str, value : Any) -> Node:
+    """Return a single node with the label and value provided.
+
+    Uses an existing node when possible, but otherwise creates one instead.
+
+    Args:
+        label (str): the label of the node to generate
+        value (Any): the pythonic value of the node to generate
+
+    Raises:
+        RuntimeError: panic if more than one node is found matching the criteria
+
+    Returns:
+        Node: a stored node with label and value
+    """
+    bone = fetch(label, value)
+    if len(bone) == 0:
+        return aiida_type(value)(value, label=label).store()
+    elif len(bone) == 1:
+        return bone.pop()
+    else:
+        raise RuntimeError
+
+def convert(ins : dict[str, Any], path : list[str] = []):
+    """Takes a dictionary of inputs and converts the values to their respective Nodes.
+
+    Args:
+        ins (dict[str, Any]): a dictionary of inputs
+        path (list[str], optional): a list of predecessor keys for nested dictionaries. Defaults to [].
+    """
+    for k, v in ins.items():
+        if k == "metadata" or isinstance(v, Node):
+            continue
+        if k in ["microstructure", "error_parameters"]:
+            convert(v, path=[*path, k])
+        else:
+            ins[k] = generate(".".join([*path, k]), v)
+
+def compile_query(ins : dict[str,Any], qb : QueryBuilder) -> None:
+    """Interate over the converted input dictionary and append to the QueryBuilder for each node.
+
+    Args:
+        ins (dict[str,Any]): a dictionary of converted inputs
+        qb (QueryBuilder): a CalcJobNode QueryBuilder with tag='calc'
+    """
+    for k, v in ins.items():
+        if k == "metadata":
+            continue
+        if k in ["microstructure", "error_parameters"] and isinstance(v, dict):
+            compile_query(v, qb)
+        else:
+            qb.append(
+                cls=type(v),
+                with_outgoing="calc",
+                filters={"pk": v.pk}
+            )
 
 
 def submit_fans(
         inputs: dict[str, Any],
         strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+        mode: Literal["Submit", "Run"] = "Submit"
     ):
     """This utility function simplifies the process of submitting jobs to aiida-fans.
 
@@ -52,41 +154,32 @@ def submit_fans(
     ```
     """
     # update inputs with metadata.options.stash if necessary:
-    if strategy == "Fragmented":
-        calcjob = CalculationFactory("fans.fragmented")
-        # if inputs["metadata"]["options"].get("stash") is not None:
-        #     print("WARNING: Fragmented calculation strategy may operate incorrectly with extraneous stash options.")
-    elif strategy == "Stashed":
-        calcjob = CalculationFactory("fans.stashed")
-        # if the stash already exists,
-        # if (
-        #     Path(inputs["code"].computer.get_workdir()) /
-        #     "stash/microstructures" /
-        #     inputs["microstructure"]["file"].filename
-        # ).is_file():
-        #     # if stash options are given, warn
-        #     if inputs["metadata"]["options"].get("stash") is not None:
-        #         print("WARNING: Stashed calculation strategy may operate incorrectly with extraneous stash options.")
-        # # if the stash does NOT already exist,
-        # else:  # noqa: PLR5501
-        #     # if stash options are not given, make them
-        #     # if (inputs["metadata"].get("options") is None) or (inputs["metadata"]["options"].get("stash") is None):
-        #     if inputs["metadata"].get("options", {}).get("stash") is None:
-        #         if inputs["metadata"].get("options") is None:
-        #             inputs["metadata"]["options"] = {}
-        #         inputs["metadata"]["options"].update( { "stash": {
-        #             "source_list": [inputs["microstructure"]["file"].filename],
-        #             "target_base": str(Path(inputs["code"].computer.get_workdir()) / "stash/microstructures"),
-        #             "stash_mode": StashMode.COPY.value,
-        #         } } )
-        #     # if stash options ARE given, warn
-        #     else:
-        #         print("WARNING: Stashed calculation strategy is incompatible with extraneous stash options.")
-    else:
-        print("ERROR: Calculation strategy must be either 'Fragmented' or 'Stashed'.")
-        raise ValueError
+    match strategy:
+        case "Fragmented":
+            calcjob = CalculationFactory("fans.fragmented")
+        case "Stashed":
+            calcjob = CalculationFactory("fans.stashed")
+        case _:
+            print("ERROR: Calculation strategy must be either 'Fragmented' or 'Stashed'.")
+            raise ValueError
 
     # fetch the inputs if possible or otherwise create them
-    pass
+    convert(inputs)
 
-    run(calcjob, inputs)
+    # check if identical calculation already exists
+    qb = QueryBuilder().append(cls=CalcJobNode, tag="calc", project="id")
+    compile_query(inputs, qb)
+    results = qb.all(flat=True)
+    if (count := len(results)) != 0:
+        print(f"It seems this calculation has already been performed {count} time{"s" if count > 1 else ""}. {results}")
+        confirmation = input("Are you sure you want to rerun it? [y/N] ").strip().lower() in ["y", "yes"]
+    else:
+        confirmation = False
+
+    if confirmation:
+        match mode:
+            case "Run":
+                run(calcjob, inputs) # type: ignore
+            case "Submit":
+                submit(calcjob, inputs) # type: ignore
+
