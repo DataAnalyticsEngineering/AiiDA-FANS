@@ -155,10 +155,10 @@ def submit_fans(
     """
     # update inputs with metadata.options.stash if necessary:
     match strategy:
-        case "Fragmented":
-            calcjob = CalculationFactory("fans.fragmented")
         case "Stashed":
             calcjob = CalculationFactory("fans.stashed")
+        case "Fragmented":
+            calcjob = CalculationFactory("fans.fragmented")
         case _:
             print("ERROR: Calculation strategy must be either 'Fragmented' or 'Stashed'.")
             raise ValueError
@@ -174,7 +174,7 @@ def submit_fans(
         print(f"It seems this calculation has already been performed {count} time{"s" if count > 1 else ""}. {results}")
         confirmation = input("Are you sure you want to rerun it? [y/N] ").strip().lower() in ["y", "yes"]
     else:
-        confirmation = False
+        confirmation = True
 
     if confirmation:
         match mode:
