@@ -3,6 +3,7 @@
 import json
 
 from aiida.orm import ArrayData, Dict, Float, Int, List, SinglefileData, Str
+from numpy import allclose, ndarray
 
 
 class InputEncoder(json.JSONEncoder):
@@ -24,3 +25,9 @@ class InputEncoder(json.JSONEncoder):
             case _:
                 # Let the base class default method raise the TypeError
                 return super().default(obj)
+
+def arraydata_equal(first: dict[str, ndarray], second: dict[str, ndarray]) -> bool:
+    """Return whether two dicts of arrays are roughly equal."""
+    if first.keys() != second.keys():
+        return False
+    return all(allclose(first[key], second[key]) for key in first)
