@@ -7,6 +7,8 @@ from aiida.orm import CalcJobNode, Data, Node, QueryBuilder
 from aiida.plugins import CalculationFactory, DataFactory
 from numpy import ndarray
 
+from aiida_fans.helpers import arraydata_equal
+
 
 def aiida_type(value : Any) -> type[Data]:
     """Find the corresponding AiiDA datatype for a variable with pythonic type.
@@ -35,7 +37,7 @@ def aiida_type(value : Any) -> type[Data]:
             else:
                 return DataFactory("core.dict") # Dict
         case _:
-            raise NotImplementedError
+            raise NotImplementedError(f"Received an input of value:  {value}    with type:  {type(value)}")
 
 def fetch(label : str, value : Any) -> list[Node]:
     """Return a list of nodes matching the label and value provided.
@@ -48,11 +50,21 @@ def fetch(label : str, value : Any) -> list[Node]:
         list[Node]: the list of nodes matching the give criteria
     """
     datatype = aiida_type(value)
-    return QueryBuilder(
+    nodes = QueryBuilder(
     ).append(cls=datatype, tag="n"
     ).add_filter("n", {"label": label}
     ).add_filter("n", {"attributes": {"==": datatype(value).base.attributes.all}}
-    ).all(flat=True) # type: ignore
+    ).all(flat=True)
+
+    if datatype != DataFactory("core.array"):
+        return nodes # type: ignore
+    else:
+        array_nodes = []
+        for array_node in nodes:
+            array_value = {k: v for k, v in [(name, array_node.get_array(name)) for name in array_node.get_arraynames()]}
+            if arraydata_equal(value, array_value):
+                array_nodes.append(array_node)
+        return array_nodes
 
 def generate(label : str, value : Any) -> Node:
     """Return a single node with the label and value provided.
