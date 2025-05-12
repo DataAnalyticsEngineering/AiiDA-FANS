@@ -112,12 +112,12 @@ def compile_query(ins : dict[str,Any], qb : QueryBuilder) -> None:
             )
 
 
-def submit_fans(
+def execute_fans(
+        mode: Literal["Submit", "Run"],
         inputs: dict[str, Any],
         strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
-        mode: Literal["Submit", "Run"] = "Submit"
     ):
-    """This utility function simplifies the process of submitting jobs to aiida-fans.
+    """This utility function simplifies the process of executing aiida-fans jobs.
 
     The only nodes you must provide are the `code` and `microstructure` inputs.
     Other inputs can be given as standard python variables. Your repository will
@@ -125,12 +125,12 @@ def submit_fans(
     possible, otherwise new nodes will be created.
 
     The `strategy` specifies which microstructure distribution method you wish to use.
-    It defaults to "Fragmented". When using the stashed method, you must ensure
-    to include the appropriate `metadata.options` along with your inputs.
+    It defaults to "Fragmented".
 
     You must load an AiiDA profile yourself before using this function.
 
     **Args:**
+        **mode** *(Literal["Submit", "Run"])*
         **inputs** *(dict[str, Any])*
         **strategy** *(Literal["Fragmented", "Stashed"]), optional*
 
@@ -140,7 +140,7 @@ def submit_fans(
     ```
     from aiida import load_profile
     from aiida.orm import load_code, load_node
-    from aiida_fans.utils import submit_fans
+    from aiida_fans.utils import execute_fans
     load_profile()
     inputs = {
         "code": load_code("fans"),
@@ -150,7 +150,7 @@ def submit_fans(
             "label": "an example calculation"
         }
     }
-    submit_fans(inputs, "Stashed")
+    execute_fans("Submit", inputs, "Stashed")
     ```
     """
     # update inputs with metadata.options.stash if necessary:
@@ -183,3 +183,16 @@ def submit_fans(
             case "Submit":
                 submit(calcjob, inputs) # type: ignore
 
+def submit_fans(
+    inputs: dict[str, Any],
+    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+):
+    """See `execute_fans` for implementation and usage details."""
+    execute_fans("Submit", inputs, strategy)
+
+def run_fans(
+    inputs: dict[str, Any],
+    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+):
+    """See `execute_fans` for implementation and usage details."""
+    execute_fans("Run", inputs, strategy)
