@@ -10,7 +10,7 @@ from numpy import ndarray
 from aiida_fans.helpers import arraydata_equal
 
 
-def aiida_type(value : Any) -> type[Data]:
+def aiida_type(value: Any) -> type[Data]:
     """Find the corresponding AiiDA datatype for a variable with pythonic type.
 
     Args:
@@ -39,7 +39,7 @@ def aiida_type(value : Any) -> type[Data]:
         case _:
             raise NotImplementedError(f"Received an input of value:  {value}    with type:  {type(value)}")
 
-def fetch(label : str, value : Any) -> list[Node]:
+def fetch(label: str, value: Any) -> list[Node]:
     """Return a list of nodes matching the label and value provided.
 
     Args:
@@ -61,12 +61,16 @@ def fetch(label : str, value : Any) -> list[Node]:
     else:
         array_nodes = []
         for array_node in nodes:
-            array_value = {k:v for k, v in [(name, array_node.get_array(name)) for name in array_node.get_arraynames()]}
+            array_value = {
+                k: v for k, v in [
+                    (name, array_node.get_array(name)) for name in array_node.get_arraynames() # type: ignore
+                ]
+            }
             if arraydata_equal(value, array_value):
                 array_nodes.append(array_node)
         return array_nodes
 
-def generate(label : str, value : Any) -> Node:
+def generate(label: str, value: Any) -> Node:
     """Return a single node with the label and value provided.
 
     Uses an existing node when possible, but otherwise creates one instead.
@@ -89,7 +93,7 @@ def generate(label : str, value : Any) -> Node:
     else:
         raise RuntimeError
 
-def convert(ins : dict[str, Any], path : list[str] = []):
+def convert(ins: dict[str, Any], path: list[str] = []):
     """Takes a dictionary of inputs and converts the values to their respective Nodes.
 
     Args:
@@ -104,7 +108,7 @@ def convert(ins : dict[str, Any], path : list[str] = []):
         else:
             ins[k] = generate(".".join([*path, k]), v)
 
-def compile_query(ins : dict[str,Any], qb : QueryBuilder) -> None:
+def compile_query(ins: dict[str,Any], qb: QueryBuilder) -> None:
     """Interate over the converted input dictionary and append to the QueryBuilder for each node.
 
     Args:
