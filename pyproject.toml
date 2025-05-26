@@ -64,7 +64,7 @@ dependencies = {aiida-fans = "==0.1.5"}
 # [tool.pixi.feature.aiida]
 # dependencies = {aiida-core = "2.6.*"}
 [tool.pixi.feature.fans]
-dependencies = {fans = "0.3.*"}
+dependencies = {fans = "0.4.*"}
 [tool.pixi.feature.ruff]
 dependencies = {ruff = "*"}
 tasks = {fmt = "ruff check", dummy = "echo dummy", my-dummy="echo my-dummy"}
