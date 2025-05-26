@@ -8,7 +8,7 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 from aiida.common.folders import Folder
 from aiida.engine import CalcJob
 from aiida.engine.processes.process_spec import CalcJobProcessSpec
-from aiida.orm import ArrayData, Dict, Float, Int, List, SinglefileData, Str
+from aiida.orm import Dict, Float, Int, List, SinglefileData, Str
 from h5py import File as h5File
 
 from aiida_fans.helpers import make_input_dict
