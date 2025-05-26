@@ -61,7 +61,7 @@ def fetch(label : str, value : Any) -> list[Node]:
     else:
         array_nodes = []
         for array_node in nodes:
-            array_value = {k: v for k, v in [(name, array_node.get_array(name)) for name in array_node.get_arraynames()]}
+            array_value = {k:v for k, v in [(name, array_node.get_array(name)) for name in array_node.get_arraynames()]}
             if arraydata_equal(value, array_value):
                 array_nodes.append(array_node)
         return array_nodes
