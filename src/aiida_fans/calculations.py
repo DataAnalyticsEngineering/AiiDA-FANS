@@ -24,7 +24,6 @@ class FansCalcBase(CalcJob):
 
         # Metadata
         spec.inputs["metadata"]["label"].default = "FANS"
-        # spec.inputs["metadata"]["dry_run"].default = True
         ## Processing Power
         spec.inputs["metadata"]["options"]["withmpi"].default = True
         spec.inputs["metadata"]["options"]["resources"].default = {
@@ -55,7 +54,7 @@ class FansCalcBase(CalcJob):
         spec.input("error_parameters.type", valid_type=Str)
         spec.input("error_parameters.tolerance", valid_type=Float)
         ## Macroscale Loading Conditions
-        spec.input("macroscale_loading", valid_type=ArrayData)
+        spec.input("macroscale_loading", valid_type=List)
         ## Results Specification
         spec.input("results", valid_type=List)
 
