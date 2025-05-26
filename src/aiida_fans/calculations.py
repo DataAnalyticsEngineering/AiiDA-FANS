@@ -22,7 +22,7 @@ class FansCalcBase(CalcJob):
         """Define inputs, outputs, and exit codes of the calculation."""
         super().define(spec)
 
-        # Metadata
+        # Default Metadata
         spec.inputs["metadata"]["label"].default = "FANS"
         ## Processing Power
         spec.inputs["metadata"]["options"]["withmpi"].default = True
@@ -35,6 +35,10 @@ class FansCalcBase(CalcJob):
         spec.inputs["metadata"]["options"]["output_filename"].default = "output.h5"
         ## Parser
         spec.inputs["metadata"]["options"]["parser_name"].default = "fans"
+
+        # Custom Metadata
+        spec.input("metadata.options.results_prefix", valid_type=str, default="")
+        spec.input("metadata.options.results", valid_type=list, default=[])
 
         # Input Ports
         ## Microstructure Definition
@@ -55,8 +59,6 @@ class FansCalcBase(CalcJob):
         spec.input("error_parameters.tolerance", valid_type=Float)
         ## Macroscale Loading Conditions
         spec.input("macroscale_loading", valid_type=List)
-        ## Results Specification
-        spec.input("results", valid_type=List)
 
         # Output Ports
         spec.output("output", valid_type=SinglefileData)

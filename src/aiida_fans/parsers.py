@@ -26,7 +26,11 @@ class FansParser(Parser):
             return self.exit_codes.ERROR_MISSING_OUTPUT
 
         with h5File(output_path) as h5:
-            results = h5[self.node.inputs.microstructure.datasetname.value]
+            results = h5[
+                self.node.inputs.microstructure.datasetname.value + \
+                    "_results/" + \
+                        self.node.get_option('results_prefix')
+            ]
             results.visititems(self.parse_h5)
 
         if self.results_dict:

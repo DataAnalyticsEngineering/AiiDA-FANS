@@ -15,6 +15,7 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
             "datasetname": job.inputs.microstructure.datasetname.value,
             "L": job.inputs.microstructure.L.get_list()
         },
+        "results_prefix": job.inputs.metadata.options.results_prefix,
         ## Problem Type and Material Model
         "problem_type": job.inputs.problem_type.value,
         "matmodel": job.inputs.matmodel.value,
@@ -30,7 +31,7 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
         ## Macroscale Loading Conditions
         "macroscale_loading": job.inputs.macroscale_loading.get_list(),
         ## Results Specification
-        "results": job.inputs.results.get_list()
+        "results": job.inputs.metadata.options.results
     }
 
 def arraydata_equal(first: dict[str, ndarray], second: dict[str, ndarray]) -> bool:
