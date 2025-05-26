@@ -60,7 +60,7 @@ platforms = ["linux-64"]
 [tool.pixi.feature.self]
 pypi-dependencies = {aiida-fans = { path = ".", editable = true }}
 [tool.pixi.feature.plugin]
-dependencies = {aiida-fans = "0.1.5"}
+dependencies = {aiida-fans = "==0.1.5"}
 # [tool.pixi.feature.aiida]
 # dependencies = {aiida-core = "2.6.*"}
 [tool.pixi.feature.fans]
