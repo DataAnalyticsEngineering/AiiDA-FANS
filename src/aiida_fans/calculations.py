@@ -8,8 +8,10 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 from aiida.common.folders import Folder
 from aiida.engine import CalcJob
 from aiida.engine.processes.process_spec import CalcJobProcessSpec
-from aiida.orm import ArrayData, Dict, Float, Int, List, SinglefileData, Str
+from aiida.orm import Dict, Float, Int, List, SinglefileData, Str
 from h5py import File as h5File
+
+from aiida_fans.helpers import make_input_dict
 
 
 class FansCalcBase(CalcJob):
@@ -20,9 +22,8 @@ class FansCalcBase(CalcJob):
         """Define inputs, outputs, and exit codes of the calculation."""
         super().define(spec)
 
-        # Metadata
+        # Default Metadata
         spec.inputs["metadata"]["label"].default = "FANS"
-        # spec.inputs["metadata"]["dry_run"].default = True
         ## Processing Power
         spec.inputs["metadata"]["options"]["withmpi"].default = True
         spec.inputs["metadata"]["options"]["resources"].default = {
@@ -34,6 +35,10 @@ class FansCalcBase(CalcJob):
         spec.inputs["metadata"]["options"]["output_filename"].default = "output.h5"
         ## Parser
         spec.inputs["metadata"]["options"]["parser_name"].default = "fans"
+
+        # Custom Metadata
+        spec.input("metadata.options.results_prefix", valid_type=str, default="")
+        spec.input("metadata.options.results", valid_type=list, default=[])
 
         # Input Ports
         ## Microstructure Definition
@@ -53,9 +58,7 @@ class FansCalcBase(CalcJob):
         spec.input("error_parameters.type", valid_type=Str)
         spec.input("error_parameters.tolerance", valid_type=Float)
         ## Macroscale Loading Conditions
-        spec.input("macroscale_loading", valid_type=ArrayData)
-        ## Results Specification
-        spec.input("results", valid_type=List)
+        spec.input("macroscale_loading", valid_type=List)
 
         # Output Ports
         spec.output("output", valid_type=SinglefileData)
@@ -107,28 +110,8 @@ class FansStashedCalculation(FansCalcBase):
                     copyfileobj(source, target)
 
         # input.json as dict
-        input_dict = {
-            ## Microstructure Definition
-            "ms_filename": str(ms_filepath), # path to stashed microstructure
-            "ms_datasetname": self.inputs.microstructure.datasetname.value,
-            "ms_L": self.inputs.microstructure.L.get_list(),
-            ## Problem Type and Material Model
-            "problem_type": self.inputs.problem_type.value,
-            "matmodel": self.inputs.matmodel.value,
-            "material_properties": self.inputs.material_properties.get_dict(),
-            ## Solver Settings
-            "method": self.inputs.method.value,
-            "n_it": self.inputs.n_it.value,
-            "error_parameters": {
-                "measure": self.inputs.error_parameters.measure.value,
-                "type": self.inputs.error_parameters.type.value,
-                "tolerance": self.inputs.error_parameters.tolerance.value
-            },
-            ## Macroscale Loading Conditions
-            "macroscale_loading": [a[1].tolist() for a in self.inputs.macroscale_loading.get_iterarrays()],
-            ## Results Specification
-            "results": self.inputs.results.get_list()
-        }
+        input_dict = make_input_dict(self)
+        input_dict["microstructure"]["filepath"] = str(ms_filepath)
         # write input.json to working directory
         with folder.open(self.options.input_filename, "w", "utf8") as json:
             dump(input_dict, json, indent=4)
@@ -154,28 +137,8 @@ class FansFragmentedCalculation(FansCalcBase):
                         h5_src.copy(datasetname, h5_dest, name=datasetname)
 
         # input.json as dict
-        input_dict = {
-            ## Microstructure Definition
-            "ms_filename": "microstructure.h5", # path to fragmented microstructure
-            "ms_datasetname": self.inputs.microstructure.datasetname.value,
-            "ms_L": self.inputs.microstructure.L.get_list(),
-            ## Problem Type and Material Model
-            "problem_type": self.inputs.problem_type.value,
-            "matmodel": self.inputs.matmodel.value,
-            "material_properties": self.inputs.material_properties.get_dict(),
-            ## Solver Settings
-            "method": self.inputs.method.value,
-            "n_it": self.inputs.n_it.value,
-            "error_parameters": {
-                "measure": self.inputs.error_parameters.measure.value,
-                "type": self.inputs.error_parameters.type.value,
-                "tolerance": self.inputs.error_parameters.tolerance.value
-            },
-            ## Macroscale Loading Conditions
-            "macroscale_loading": [a[1].tolist() for a in self.inputs.macroscale_loading.get_iterarrays()],
-            ## Results Specification
-            "results": self.inputs.results.get_list()
-        }
+        input_dict = make_input_dict(self)
+        input_dict["microstructure"]["filepath"] = "microstructure.h5"
         # write input.json to working directory
         with folder.open(self.options.input_filename, "w", "utf8") as json:
             dump(input_dict, json, indent=4)
