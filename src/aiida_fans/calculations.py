@@ -109,7 +109,7 @@ class FansStashedCalculation(FansCalcBase):
 
         # input.json as dict
         input_dict = make_input_dict(self)
-        input_dict["microstructure"]["filename"] = str(ms_filepath)
+        input_dict["microstructure"]["filepath"] = str(ms_filepath)
         # write input.json to working directory
         with folder.open(self.options.input_filename, "w", "utf8") as json:
             dump(input_dict, json, indent=4)
@@ -136,7 +136,7 @@ class FansFragmentedCalculation(FansCalcBase):
 
         # input.json as dict
         input_dict = make_input_dict(self)
-        input_dict["microstructure"]["filename"] = "microstructure.h5"
+        input_dict["microstructure"]["filepath"] = "microstructure.h5"
         # write input.json to working directory
         with folder.open(self.options.input_filename, "w", "utf8") as json:
             dump(input_dict, json, indent=4)
