@@ -23,11 +23,15 @@ dependencies = [
 ]
 
 # Entry Points
-[project.entry-points]
-"aiida.data" = { "fans" = "aiida_fans.data:FANSParameters" }
-"aiida.calculations" = { "fans" = "aiida_fans.calculations:FANSCalculation" }
-"aiida.parsers" = { "fans" = "aiida_fans.parsers:FANSParser" }
-"aiida.cmdline.data" = { "fans" = "aiida_fans.cli:data_cli" }
+# [project.entry-points."aiida.data"]
+# "fans" = "aiida_fans.data:FANSParameters"
+[project.entry-points."aiida.calculations"]
+"fans.stashed" = "aiida_fans.calculations:FansStashedCalculation"
+"fans.fragmented" = "aiida_fans.calculations:FansFragmentedCalculation"
+[project.entry-points."aiida.parsers"]
+"fans" = "aiida_fans.parsers:FansParser"
+# [project.entry-points."aiida.cmdline.data"]
+# "fans" = "aiida_fans.cli:data_cli"
 
 # Build System
 [build-system]
@@ -58,10 +62,10 @@ pypi-dependencies = {aiida-fans = { path = ".", editable = true }}
 [tool.pixi.feature.plugin]
 dependencies = {aiida-fans = "0.1.5"}
 [tool.pixi.feature.aiida]
-dependencies = {"aiida-core.services" = "2.*"}
+dependencies = {aiida-core = "2.6.*"}
 tasks = {start = "rabbitmq-server -detached", stop = "rabbitmqctl stop"}
 [tool.pixi.feature.fans]
-dependencies = {fans = "0.3.*"}
+dependencies = {fans = "0.4.*"}
 [tool.pixi.feature.ruff]
 dependencies = {ruff = "*"}
 tasks = {fmt = "ruff check", dummy = "echo dummy", my-dummy="echo my-dummy"}

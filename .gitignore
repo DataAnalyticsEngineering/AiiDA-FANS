@@ -61,11 +61,14 @@ diff.md
 # Lock file
 *.lock
 
-# tutorial required files
+# Tutorial required files
 !tutorial_dataset.h5
 
-# tutorial generated files
+# Tutorial generated files
 configure_profile.yaml
 configure_computer.yaml
 configure_code.yaml
 .aiida_run
+
+# Development test sandbox
+test_dev
