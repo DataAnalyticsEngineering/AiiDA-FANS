@@ -5,13 +5,13 @@ description = "AiiDA plugin for FANS, an FFT-based homogenization solver."
 urls = {Documentation = "http://aiida-fans.readthedocs.io/en/latest/", Source = "https://github.com/ethan-shanahan/aiida-fans" }
 authors = [{name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com"}]
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "LGPL-3.0-or-later"
+license-files = ["LICENSE"]
 classifiers = [
     "Natural Language :: English",
     "Programming Language :: Python",
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Development Status :: 3 - Alpha",
     "Framework :: AiiDA"
 ]
