@@ -14,8 +14,8 @@ from h5py import File as h5File
 from aiida_fans.helpers import make_input_dict
 
 
-class FansCalcBase(CalcJob):
-    """Base class of all calculations using FANS."""
+class FansCalculation(CalcJob):
+    """Calculations using FANS."""
 
     @classmethod
     def define(cls, spec: CalcJobProcessSpec) -> None:
@@ -39,6 +39,7 @@ class FansCalcBase(CalcJob):
         # Custom Metadata
         spec.input("metadata.options.results_prefix", valid_type=str, default="")
         spec.input("metadata.options.results", valid_type=list, default=[])
+        spec.input("metadata.options.stashed_microstructure", valid_type=bool, default=True)
 
         # Input Ports
         ## Microstructure Definition
@@ -69,6 +70,40 @@ class FansCalcBase(CalcJob):
 
     def prepare_for_submission(self, folder: Folder) -> CalcInfo:
         """Prepare the calculation for submission."""
+        # Stashed Strategy:
+        if self.options.stashed_microstructure:
+            ms_filepath: Path = Path(self.inputs.code.computer.get_workdir()) / \
+                                "stash/microstructures" / \
+                                self.inputs.microstructure.file.filename
+            # if microstructure does not exist in stash, make it
+            if not ms_filepath.is_file():
+                ms_filepath.parent.mkdir(parents=True, exist_ok=True)
+                with self.inputs.microstructure.file.open(mode='rb') as source:
+                    with ms_filepath.open(mode='wb') as target:
+                        copyfileobj(source, target)
+
+            # input.json as dict
+            input_dict = make_input_dict(self)
+            input_dict["microstructure"]["filepath"] = str(ms_filepath)
+            # write input.json to working directory
+            with folder.open(self.options.input_filename, "w", "utf8") as json:
+                dump(input_dict, json, indent=4)
+        # Fragmented Strategy:
+        else:
+            datasetname : str = self.inputs.microstructure.datasetname.value
+            with folder.open("microstructure.h5","bw") as f_dest:
+                with h5File(f_dest,"w") as h5_dest:
+                    with self.inputs.microstructure.file.open(mode="rb") as f_src:
+                        with h5File(f_src,'r') as h5_src:
+                            h5_src.copy(datasetname, h5_dest, name=datasetname)
+
+            # input.json as dict
+            input_dict = make_input_dict(self)
+            input_dict["microstructure"]["filepath"] = "microstructure.h5"
+            # write input.json to working directory
+            with folder.open(self.options.input_filename, "w", "utf8") as json:
+                dump(input_dict, json, indent=4)
+
         # Specifying the code info:
         codeinfo = CodeInfo()
         codeinfo.code_uuid = self.inputs.code.uuid
@@ -87,60 +122,3 @@ class FansCalcBase(CalcJob):
         ]
 
         return calcinfo
-
-
-class FansStashedCalculation(FansCalcBase):
-    """Calculations using FANS and the "Stashed" microstructure distribution strategy."""
-
-    @classmethod
-    def define(cls, spec: CalcJobProcessSpec) -> None:
-        """Define inputs, outputs, and exit codes of the calculation."""
-        return super().define(spec)
-
-    def prepare_for_submission(self, folder: Folder) -> CalcInfo:
-        """Prepare the calculation for submission."""
-        ms_filepath: Path = Path(self.inputs.code.computer.get_workdir()) / \
-                            "stash/microstructures" / \
-                            self.inputs.microstructure.file.filename
-        # if microstructure does not exist in stash, make it
-        if not ms_filepath.is_file():
-            ms_filepath.parent.mkdir(parents=True, exist_ok=True)
-            with self.inputs.microstructure.file.open(mode='rb') as source:
-                with ms_filepath.open(mode='wb') as target:
-                    copyfileobj(source, target)
-
-        # input.json as dict
-        input_dict = make_input_dict(self)
-        input_dict["microstructure"]["filepath"] = str(ms_filepath)
-        # write input.json to working directory
-        with folder.open(self.options.input_filename, "w", "utf8") as json:
-            dump(input_dict, json, indent=4)
-
-        return super().prepare_for_submission(folder)
-
-class FansFragmentedCalculation(FansCalcBase):
-    """Calculations using FANS and the "Fragmented" microstructure distribution strategy."""
-
-    @classmethod
-    def define(cls, spec: CalcJobProcessSpec) -> None:
-        """Define inputs, outputs, and exit codes of the calculation."""
-        return super().define(spec)
-
-    def prepare_for_submission(self, folder: Folder) -> CalcInfo:
-        """Prepare the calculation for submission."""
-        # Write Microstructure Subset to Folder
-        datasetname : str = self.inputs.microstructure.datasetname.value
-        with folder.open("microstructure.h5","bw") as f_dest:
-            with h5File(f_dest,"w") as h5_dest:
-                with self.inputs.microstructure.file.open(mode="rb") as f_src:
-                    with h5File(f_src,'r') as h5_src:
-                        h5_src.copy(datasetname, h5_dest, name=datasetname)
-
-        # input.json as dict
-        input_dict = make_input_dict(self)
-        input_dict["microstructure"]["filepath"] = "microstructure.h5"
-        # write input.json to working directory
-        with folder.open(self.options.input_filename, "w", "utf8") as json:
-            dump(input_dict, json, indent=4)
-
-        return super().prepare_for_submission(folder)
