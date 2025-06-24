@@ -26,8 +26,7 @@ dependencies = [
 # [project.entry-points."aiida.data"]
 # "fans" = "aiida_fans.data:FANSParameters"
 [project.entry-points."aiida.calculations"]
-"fans.stashed" = "aiida_fans.calculations:FansStashedCalculation"
-"fans.fragmented" = "aiida_fans.calculations:FansFragmentedCalculation"
+"fans" = "aiida_fans.calculations:FansCalculation"
 [project.entry-points."aiida.parsers"]
 "fans" = "aiida_fans.parsers:FansParser"
 # [project.entry-points."aiida.cmdline.data"]
