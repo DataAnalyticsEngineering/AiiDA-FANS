@@ -134,8 +134,7 @@ def compile_query(ins: dict[str, Any], qb: QueryBuilder) -> None:
 
 def execute_fans(
     mode: Literal["Submit", "Run"],
-    inputs: dict[str, Any],
-    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+    inputs: dict[str, Any]
 ):
     """This utility function simplifies the process of executing aiida-fans jobs.
 
@@ -173,15 +172,7 @@ def execute_fans(
     execute_fans("Submit", inputs, "Stashed")
     ```
     """
-    # update inputs with metadata.options.stash if necessary:
-    match strategy:
-        case "Stashed":
-            calcjob = CalculationFactory("fans.stashed")
-        case "Fragmented":
-            calcjob = CalculationFactory("fans.fragmented")
-        case _:
-            print("ERROR: Calculation strategy must be either 'Fragmented' or 'Stashed'.")
-            raise ValueError
+    calcjob = CalculationFactory("fans")
 
     # move results_prefix and results items to metadata.options
     inputs.setdefault("metadata", {}).setdefault("options", {})["results_prefix"] = inputs.pop("results_prefix", "")
@@ -209,16 +200,14 @@ def execute_fans(
 
 
 def submit_fans(
-    inputs: dict[str, Any],
-    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+    inputs: dict[str, Any]
 ):
     """See `execute_fans` for implementation and usage details."""
-    execute_fans("Submit", inputs, strategy)
+    execute_fans("Submit", inputs)
 
 
 def run_fans(
-    inputs: dict[str, Any],
-    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
+    inputs: dict[str, Any]
 ):
     """See `execute_fans` for implementation and usage details."""
-    execute_fans("Run", inputs, strategy)
+    execute_fans("Run", inputs)
