@@ -1,8 +1,6 @@
-
-
 import marimo
 
-__generated_with = "0.13.0"
+__generated_with = "0.14.7"
 app = marimo.App(app_title="AiiDA-FANS Tutorial")
 
 
@@ -90,10 +88,10 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-        ### 1. Create a Profile
+    ### 1. Create a Profile
 
-        By default, AiiDA stores app data at the user level. Even when AiiDA is installed in a virtual environment, it will still read and write to `.aiida` in your home directory. However, AiiDA provides users a way to seperate their data into "profiles". Let's create a profile for this tutorial.
-        """
+    By default, AiiDA stores app data at the user level. Even when AiiDA is installed in a virtual environment, it will still read and write to `.aiida` in your home directory. However, AiiDA provides users a way to seperate their data into "profiles". Let's create a profile for this tutorial.
+    """
     )
     return
 
@@ -201,15 +199,15 @@ def _(mo, profile_settings):
 def _(mo):
     mo.md(
         r"""
-        ### 2. Specify a Computer
+    ### 2. Specify a Computer
 
-        Before you proceed, ensure that your local computer satisfies the following requirements:
+    Before you proceed, ensure that your local computer satisfies the following requirements:
 
-        - it runs a Unix-like operating system (Linux distros and MacOS should work fine)
-        - it has `bash` installed
+    - it runs a Unix-like operating system (Linux distros and MacOS should work fine)
+    - it has `bash` installed
 
-        AiiDA does not assume what computer you wish to run jobs on, so even if you are only using your local machine, you must tell it as much. That is what we will do here; specify the localhost computer.
-        """
+    AiiDA does not assume what computer you wish to run jobs on, so even if you are only using your local machine, you must tell it as much. That is what we will do here; specify the localhost computer.
+    """
     )
     return
 
@@ -284,7 +282,8 @@ def _(Path, computer_settings, mo):
 
 @app.cell(hide_code=True)
 def _(computer_settings, mo):
-    mo.md(rf"""
+    mo.md(
+        rf"""
     To specify your new computer from this file run:
 
     ```
@@ -313,10 +312,10 @@ def _(computer_settings, mo):
 def _(mo):
     mo.md(
         r"""
-        ### 3. Define a Code
+    ### 3. Define a Code
 
-        The final step to setup AiiDA is to define the "code" you wish to utilise. Here, the "code" refers to FANS. This step is important as it tells AiiDA how to execute FANS and which plugin should handle its jobs. AiiDA provides many ways of handling the "code" of your project. Since we installed FANS in the environment, we can simply make use of it there.
-        """
+    The final step to setup AiiDA is to define the "code" you wish to utilise. Here, the "code" refers to FANS. This step is important as it tells AiiDA how to execute FANS and which plugin should handle its jobs. AiiDA provides many ways of handling the "code" of your project. Since we installed FANS in the environment, we can simply make use of it there.
+    """
     )
     return
 
@@ -429,105 +428,105 @@ def _(code_settings, mo):
 def _(mo):
     mo.md(
         r"""
-        ## FANS Rundown
+    ## FANS Rundown
 
-        FANS requires a JSON input file. The input file can be thought of in 5 sections, each specifying the various problem parameters as well as runtime settings. Each setting also notes the appropriate AiiDA datatype. This is the type of node that you must give AiiDA when running jobs, as we will see later.
+    FANS requires a JSON input file. The input file can be thought of in 5 sections, each specifying the various problem parameters as well as runtime settings. Each setting also notes the appropriate AiiDA datatype. This is the type of node that you must give AiiDA when running jobs, as we will see later.
 
-        ### Microstructure Definition
+    ### Microstructure Definition
 
-        ```json
-        "ms_filename": "microstructures/sphere32.h5",
-        "ms_datasetname": "/sphere/32x32x32/ms",
-        "ms_L": [1.0, 1.0, 1.0]
-        ```
+    ```json
+    "ms_filename": "microstructures/sphere32.h5",
+    "ms_datasetname": "/sphere/32x32x32/ms",
+    "ms_L": [1.0, 1.0, 1.0]
+    ```
 
-        - `ms_filename`: This specifies the path to the HDF5 file that contains the microstructure data. (AiiDA type: `SinglefileData`)
-        - `ms_datasetname`: This is the path within the HDF5 file to the specific dataset that represents the microstructure. (AiiDA type: `Str`)
-        - `ms_L`: Microstructure length defines the physical dimensions of the microstructure in the x, y, and z directions. (AiiDA type: `List`)
+    - `ms_filename`: This specifies the path to the HDF5 file that contains the microstructure data. (AiiDA type: `SinglefileData`)
+    - `ms_datasetname`: This is the path within the HDF5 file to the specific dataset that represents the microstructure. (AiiDA type: `Str`)
+    - `ms_L`: Microstructure length defines the physical dimensions of the microstructure in the x, y, and z directions. (AiiDA type: `List`)
 
-        ### Problem Type and Material Model
+    ### Problem Type and Material Model
 
-        ```json
-        "problem_type": "mechanical",
-        "matmodel": "LinearElasticIsotropic",
-        "material_properties": {
-            "bulk_modulus": [62.5000, 222.222],
-            "shear_modulus": [28.8462, 166.6667]
-        }
-        ```
+    ```json
+    "problem_type": "mechanical",
+    "matmodel": "LinearElasticIsotropic",
+    "material_properties": {
+        "bulk_modulus": [62.5000, 222.222],
+        "shear_modulus": [28.8462, 166.6667]
+    }
+    ```
 
-        - `problem_type`: This defines the type of physical problem you are solving. Common options include "thermal" problems and "mechanical" problems. (AiiDA type: `Str`)
-        - `matmodel`: This specifies the material model to be used in the simulation. Examples include `LinearThermalIsotropic` for isotropic linear thermal problems, `LinearElasticIsotropic` for isotropic linear elastic mechanical problems, `PseudoPlasticLinearHardening`/`PseudoPlasticNonLinearHardening` for plasticity mimicking model with linear/nonlinear hardening, and `J2ViscoPlastic_LinearIsotropicHardening`/ `J2ViscoPlastic_NonLinearIsotropicHardening` for rate dependent J2 plasticity model with linear/nonlinear isotropic hardening. (AiiDA type: `Str`)
-        - `material_properties`: This provides the necessary material parameters for the chosen material model. For thermal problems, you might specify `conductivity`, while mechanical problems might require `bulk_modulus`, `shear_modulus`, and more properties for advanced material models. These properties can be defined as arrays to represent multiple phases within the microstructure. (AiiDA type: `Dict`)
+    - `problem_type`: This defines the type of physical problem you are solving. Common options include "thermal" problems and "mechanical" problems. (AiiDA type: `Str`)
+    - `matmodel`: This specifies the material model to be used in the simulation. Examples include `LinearThermalIsotropic` for isotropic linear thermal problems, `LinearElasticIsotropic` for isotropic linear elastic mechanical problems, `PseudoPlasticLinearHardening`/`PseudoPlasticNonLinearHardening` for plasticity mimicking model with linear/nonlinear hardening, and `J2ViscoPlastic_LinearIsotropicHardening`/ `J2ViscoPlastic_NonLinearIsotropicHardening` for rate dependent J2 plasticity model with linear/nonlinear isotropic hardening. (AiiDA type: `Str`)
+    - `material_properties`: This provides the necessary material parameters for the chosen material model. For thermal problems, you might specify `conductivity`, while mechanical problems might require `bulk_modulus`, `shear_modulus`, and more properties for advanced material models. These properties can be defined as arrays to represent multiple phases within the microstructure. (AiiDA type: `Dict`)
 
-        ### Solver Settings
+    ### Solver Settings
 
-        ```json
-        "method": "cg",
-        "error_parameters":{
-            "measure": "Linfinity",
-            "type": "absolute",
-            "tolerance": 1e-10
-        },
-        "n_it": 100
-        ```
+    ```json
+    "method": "cg",
+    "error_parameters":{
+        "measure": "Linfinity",
+        "type": "absolute",
+        "tolerance": 1e-10
+    },
+    "n_it": 100
+    ```
 
-        - `method`: This indicates the numerical method to be used for solving the system of equations. `cg` stands for the Conjugate Gradient method, and `fp` stands for the Fixed Point method. (AiiDA type: `Str`)
-        - `error_parameters`: This section defines the error parameters for the solver. Error control is applied on the finite element nodal residual of the problem.
-            - `measure`: Specifies the norm used to measure the error. Options include `Linfinity`, `L1`, or `L2`. (AiiDA type: `Str`)
-            - `type`: Defines the type of error measurement. Options are `absolute` or `relative`. (AiiDA type: `Str`)
-            - `tolerance`: Sets the tolerance level for the solver, defining the convergence criterion based on the chosen error measure. The solver iterates until the solution meets this tolerance. (AiiDA type: `Float`)
-        - `n_it`: Specifies the maximum number of iterations allowed for the FANS solver. (AiiDA type: `Int`)
+    - `method`: This indicates the numerical method to be used for solving the system of equations. `cg` stands for the Conjugate Gradient method, and `fp` stands for the Fixed Point method. (AiiDA type: `Str`)
+    - `error_parameters`: This section defines the error parameters for the solver. Error control is applied on the finite element nodal residual of the problem.
+        - `measure`: Specifies the norm used to measure the error. Options include `Linfinity`, `L1`, or `L2`. (AiiDA type: `Str`)
+        - `type`: Defines the type of error measurement. Options are `absolute` or `relative`. (AiiDA type: `Str`)
+        - `tolerance`: Sets the tolerance level for the solver, defining the convergence criterion based on the chosen error measure. The solver iterates until the solution meets this tolerance. (AiiDA type: `Float`)
+    - `n_it`: Specifies the maximum number of iterations allowed for the FANS solver. (AiiDA type: `Int`)
 
 
-        ### Macroscale Loading Conditions
+    ### Macroscale Loading Conditions
 
-        ```json
-        "macroscale_loading":   [
-                                    [
-                                        [0.004, -0.002, -0.002, 0, 0, 0],
-                                        [0.008, -0.004, -0.004, 0, 0, 0],
-                                        [0.012, -0.006, -0.006, 0, 0, 0],
-                                        [0.016, -0.008, -0.008, 0, 0, 0],
-                                    ],
-                                    [
-                                        [0, 0, 0, 0.002, 0, 0],
-                                        [0, 0, 0, 0.004, 0, 0],
-                                        [0, 0, 0, 0.006, 0, 0],
-                                        [0, 0, 0, 0.008, 0, 0],
-                                    ]
+    ```json
+    "macroscale_loading":   [
+                                [
+                                    [0.004, -0.002, -0.002, 0, 0, 0],
+                                    [0.008, -0.004, -0.004, 0, 0, 0],
+                                    [0.012, -0.006, -0.006, 0, 0, 0],
+                                    [0.016, -0.008, -0.008, 0, 0, 0],
+                                ],
+                                [
+                                    [0, 0, 0, 0.002, 0, 0],
+                                    [0, 0, 0, 0.004, 0, 0],
+                                    [0, 0, 0, 0.006, 0, 0],
+                                    [0, 0, 0, 0.008, 0, 0],
                                 ]
-        ```
+                            ]
+    ```
 
-        - `macroscale_loading`: This defines the external loading applied to the microstructure. It is an array of arrays, where each sub-array represents a loading condition applied to the system. The format of the loading array depends on the problem type (AiiDA type: `ArrayData`):
-            - For `thermal` problems, the array typically has 3 components, representing the temperature gradients in the x, y, and z directions.
-            - For `mechanical` problems, the array must have 6 components, corresponding to the components of the strain tensor in Mandel notation (e.g., $[[ε_{11}, ε_{22}, ε_{33}, \sqrt{2} ε_{12}, \sqrt{2} ε_{13}, \sqrt{2} ε_{23}]]$).
+    - `macroscale_loading`: This defines the external loading applied to the microstructure. It is an array of arrays, where each sub-array represents a loading condition applied to the system. The format of the loading array depends on the problem type (AiiDA type: `ArrayData`):
+        - For `thermal` problems, the array typically has 3 components, representing the temperature gradients in the x, y, and z directions.
+        - For `mechanical` problems, the array must have 6 components, corresponding to the components of the strain tensor in Mandel notation (e.g., $[[ε_{11}, ε_{22}, ε_{33}, \sqrt{2} ε_{12}, \sqrt{2} ε_{13}, \sqrt{2} ε_{23}]]$).
 
-        In the case of path/time-dependent loading as shown, for example as in plasticity problems, the `macroscale_loading` array can include multiple steps with corresponding loading conditions.
+    In the case of path/time-dependent loading as shown, for example as in plasticity problems, the `macroscale_loading` array can include multiple steps with corresponding loading conditions.
 
-        ### Results Specification
+    ### Results Specification
 
-        ```json
-        "results": [
-            "stress", "strain",
-            "stress_average", "strain_average",
-            "phase_stress_average", "phase_strain_average",
-            "microstructure",
-            "displacement",
-            "absolute_error",
-        ]
-        ```
+    ```json
+    "results": [
+        "stress", "strain",
+        "stress_average", "strain_average",
+        "phase_stress_average", "phase_strain_average",
+        "microstructure",
+        "displacement",
+        "absolute_error",
+    ]
+    ```
 
-        - `results`: This array lists the quantities that should be stored into the results HDF5 file during the simulation. Each string in the array corresponds to a specific result (AiiDA type: `List`):
-            - `stress` and `strain`: The stress and strain fields at each voxel in the microstructure.
-            - `stress_average` and `strain_average`: Volume averaged- homogenized stress and strain over the entire microstructure.
-            - `phase_stress_average` and `phase_strain_average`: Volume averaged- homogenized stress and strain for each phase within the microstructure.
-            - `microstructure`: The original microstructure data.
-            - `displacement`: The displacement fluctuation field (for mechanical problems) and temperature fluctuation field (for thermal problems).
-            - `absolute_error`: The L-infinity error of finite element nodal residual at each iteration.
+    - `results`: This array lists the quantities that should be stored into the results HDF5 file during the simulation. Each string in the array corresponds to a specific result (AiiDA type: `List`):
+        - `stress` and `strain`: The stress and strain fields at each voxel in the microstructure.
+        - `stress_average` and `strain_average`: Volume averaged- homogenized stress and strain over the entire microstructure.
+        - `phase_stress_average` and `phase_strain_average`: Volume averaged- homogenized stress and strain for each phase within the microstructure.
+        - `microstructure`: The original microstructure data.
+        - `displacement`: The displacement fluctuation field (for mechanical problems) and temperature fluctuation field (for thermal problems).
+        - `absolute_error`: The L-infinity error of finite element nodal residual at each iteration.
 
-        Additional material model specific results can be included depending on the problem type and material model.
-        """
+    Additional material model specific results can be included depending on the problem type and material model.
+    """
     )
     return
 
@@ -536,10 +535,10 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-        ## Submitting Jobs
+    ## Submitting Jobs
 
-        Now that AiiDA is suitably prepared and we're familiar with the FANS parameter specifications, its time to get to work. We will conduct a mock experiment to demonstrate the simplicity and flexibility that using the plugin offers. Breaking down the submission of jobs into two steps makes for a clean workflow.
-        """
+    Now that AiiDA is suitably prepared and we're familiar with the FANS parameter specifications, its time to get to work. We will conduct a mock experiment to demonstrate the simplicity and flexibility that using the plugin offers. Breaking down the submission of jobs into two steps makes for a clean workflow.
+    """
     )
     return
 
@@ -900,7 +899,8 @@ def node_definition(
 
 @app.cell
 def _(def_nodes_button, mo):
-    mo.md(rf"""
+    mo.md(
+        rf"""
     While the cell above defined all the parameters, they still need to be stored in the database. Otherwise, they will be lost when the session ends. AiiDA automatically stores nodes when submitting them to a job, but it is good practice to handle this yourself. Moreover, you get to see your database grow step by step. After clicking the button below, try running `verdi node list` in your terminal to see all the new additions we've made so far, and `verdi node show <id>` for more information about specific nodes.
 
     It is important to note that this time we did not make any checks through the QueryBuilder to ensure that indentical nodes don't already exist. This means that if you click the button below repeatedly, you *may* cause duplicate nodes to be created. Since these are some the first nodes we're making, it is not so critical, but in practice you would want to first fetch existing nodes you want to reuse before creating the remainder of the nodes you wish to study.
@@ -912,7 +912,8 @@ def _(def_nodes_button, mo):
         node.store()               # store each one in the database
         inputs.add_nodes(node)     # assign each one to the "inputs" group
     ```
-    """)
+    """
+    )
     return
 
 
@@ -1333,10 +1334,10 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-        ## A. `fetch()`
+    ## A. `fetch()`
 
-        This is a helper function to simplify the querying of individual nodes when the label and value are known.
-        """
+    This is a helper function to simplify the querying of individual nodes when the label and value are known.
+    """
     )
     return
 
