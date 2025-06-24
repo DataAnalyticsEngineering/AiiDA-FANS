@@ -23,15 +23,11 @@ dependencies = [
 ]
 
 # Entry Points
-# [project.entry-points."aiida.data"]
-# "fans" = "aiida_fans.data:FANSParameters"
 [project.entry-points."aiida.calculations"]
 "fans.stashed" = "aiida_fans.calculations:FansStashedCalculation"
 "fans.fragmented" = "aiida_fans.calculations:FansFragmentedCalculation"
 [project.entry-points."aiida.parsers"]
 "fans" = "aiida_fans.parsers:FansParser"
-# [project.entry-points."aiida.cmdline.data"]
-# "fans" = "aiida_fans.cli:data_cli"
 
 # Build System
 [build-system]
@@ -46,82 +42,43 @@ build-backend = "setuptools.build_meta"
 channels = ["conda-forge"]
 platforms = ["linux-64"]
 
-### pixi: default dependencies (overwrites [project] dependencies with conda)
-[tool.pixi.dependencies]
-aiida-core = ">=2.6"
-h5py = "*"
-[tool.pixi.pypi-dependencies]
-# None
-
-### pixi: default tasks
-[tool.pixi.tasks]
-# None
-
 ### pixi: features
-[tool.pixi.feature.self]
-pypi-dependencies = {aiida-fans = { path = ".", editable = true }}
-[tool.pixi.feature.plugin]
-dependencies = {aiida-fans = "==0.2.0"}
-
-[tool.pixi.feature.aiida-core]
-dependencies = {"aiida-core" = "2.6.*"}
-[tool.pixi.feature.aiida-core-pre-release]
-dependencies = {"aiida-core" = "==2.7.0rc1"}
-[tool.pixi.feature.aiida-core-services]
-dependencies = {"aiida-core.services" = "2.*"}
-tasks = {start = "rabbitmq-server -detached", stop = "rabbitmqctl stop"}
-
-[tool.pixi.feature.h5py]
-dependencies = {h5py = "*"}
-
-[tool.pixi.feature.fans]
-dependencies = {fans = "0.4.*"}
-
+[tool.pixi.feature.py3]
+dependencies = {python = "3.*"}
 [tool.pixi.feature.ruff]
 dependencies = {ruff = "*"}
 tasks = {fmt = "ruff check"}
-[tool.pixi.feature.scalene]
-dependencies = {scalene = "*"}
-[tool.pixi.feature.pytest]
-dependencies = {pytest = "*"}
-tasks = {test = "echo tests not implemented"}
-
-[tool.pixi.feature.marimo]
-dependencies = {marimo = "0.13.*"}
-tasks = {tutorial = "marimo edit tutorial.py"}
-
 [tool.pixi.feature.build]
 pypi-dependencies = {build = "*"}
 tasks = {build-dist = "python -m build"}
 [tool.pixi.feature.sphinx]
 dependencies = {sphinx = "*", sphinx-book-theme = "*"}
 tasks = {build-docs = "sphinx-build -M html docs/source docs/build"}
+[tool.pixi.feature.marimo]
+dependencies = {marimo = "0.14.*"}
+tasks = {tutorial = "marimo edit tutorial.py"}
+[tool.pixi.feature.fans]
+dependencies = {fans = "0.4.*"}
 
-[tool.pixi.feature.py311]
-dependencies = {python = "3.11.*"}
-[tool.pixi.feature.py312]
-dependencies = {python = "3.12.*"}
-[tool.pixi.feature.py3]
-dependencies = {python = "3.*"}
-
+### pixi: default environment dependencies
+[tool.pixi.dependencies]
+aiida-core = "2.6.*"
+h5py = "*"
+[tool.pixi.pypi-dependencies]
+aiida-fans = { path = ".", editable = true }
 
 ### pixi: environments
 [tool.pixi.environments]
-dev = { features = ["self", "ruff"], solve-group = "default" }
-tutorial = { features = ["self", "fans", "marimo"], solve-group = "tutorial" }
-benchmark = { features = ["self", "aiida-core-pre-release", "fans", "scalene"], solve-group = "benchmark" }
-rabbit = { features = ["py3", "self", "aiida-core-services", "fans"], no-default-feature = true, solve-group = "rabbit" }
-# CI envs:
-fmt = { features = ["py312", "ruff"], no-default-feature = true }
-dist = { features = ["py312", "build"], no-default-feature = true }
-docs = { features = ["py312", "sphinx"], no-default-feature = true }
-test-py311 = { features = ["py311", "self", "fans", "pytest"], solve-group = "py311" }
-test-py312 = { features = ["py312", "self", "fans", "pytest"], solve-group = "py312" }
+fmt  = { no-default-feature = true, features = ["py3", "ruff"] } # CI env
+dist = { no-default-feature = true, features = ["py3", "build"] } # CI env
+docs = { no-default-feature = true, features = ["py3", "sphinx"] } # CI env
+tutorial = { features = ["marimo", "fans"] }
 
 
 ## Build Tools: setuptools_scm
 [tool.setuptools_scm]
 version_file = "src/aiida_fans/_version.py"
+
 
 ## Style Tools: ruff
 [tool.ruff]
@@ -150,11 +107,6 @@ select = [
 ]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"  # Allow unused variables when underscore-prefixed.
 pydocstyle = {convention = "google"}
-
-## Test Tools: pytest
-[tool.pytest.ini_options]
-[tool.coverage]
-source = ["src/aiida_fans"]
 
 ## Docs Tools: sphinx
 # None
