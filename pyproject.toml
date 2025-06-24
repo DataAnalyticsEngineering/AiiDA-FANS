@@ -63,6 +63,7 @@ dependencies = {fans = "0.4.*"}
 [tool.pixi.dependencies]
 aiida-core = "2.6.*"
 h5py = "*"
+pre-commit = "*"
 [tool.pixi.pypi-dependencies]
 aiida-fans = { path = ".", editable = true }
 
