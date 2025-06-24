@@ -44,9 +44,6 @@ platforms = ["linux-64"]
 ### pixi: features
 [tool.pixi.feature.py3]
 dependencies = {python = "3.*"}
-[tool.pixi.feature.ruff]
-dependencies = {ruff = "*"}
-tasks = {fmt = "ruff check"}
 [tool.pixi.feature.build]
 pypi-dependencies = {build = "*"}
 tasks = {build-dist = "python -m build"}
@@ -63,12 +60,12 @@ dependencies = {fans = "0.4.*"}
 [tool.pixi.dependencies]
 aiida-core = "2.6.*"
 h5py = "*"
+pre-commit = "*"
 [tool.pixi.pypi-dependencies]
 aiida-fans = { path = ".", editable = true }
 
 ### pixi: environments
 [tool.pixi.environments]
-fmt  = { no-default-feature = true, features = ["py3", "ruff"] } # CI env
 dist = { no-default-feature = true, features = ["py3", "build"] } # CI env
 docs = { no-default-feature = true, features = ["py3", "sphinx"] } # CI env
 tutorial = { features = ["marimo", "fans"] }

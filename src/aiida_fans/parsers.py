@@ -19,7 +19,7 @@ class FansParser(Parser):
 
     def parse(self, **kwargs) -> ExitCode | None:
         """Parse outputs and store results as nodes."""
-        output_path: Path = Path(kwargs["retrieved_temporary_folder"]) / self.node.get_option("output_filename") # type: ignore
+        output_path: Path = Path(kwargs["retrieved_temporary_folder"]) / self.node.get_option("output_filename")  # type: ignore
         if output_path.is_file():
             self.out("output", node=SinglefileData(output_path))
         else:
@@ -27,9 +27,7 @@ class FansParser(Parser):
 
         with h5File(output_path) as h5:
             results = h5[
-                self.node.inputs.microstructure.datasetname.value + \
-                    "_results/" + \
-                        self.node.get_option('results_prefix')
+                self.node.inputs.microstructure.datasetname.value + "_results/" + self.node.get_option("results_prefix")
             ]
             results.visititems(self.parse_h5)
 

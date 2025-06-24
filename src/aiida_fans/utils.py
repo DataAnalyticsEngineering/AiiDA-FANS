@@ -132,10 +132,7 @@ def compile_query(ins: dict[str, Any], qb: QueryBuilder) -> None:
             qb.append(cls=type(v), with_outgoing="calc", filters={"pk": v.pk})
 
 
-def execute_fans(
-    mode: Literal["Submit", "Run"],
-    inputs: dict[str, Any]
-):
+def execute_fans(mode: Literal["Submit", "Run"], inputs: dict[str, Any]):
     """This utility function simplifies the process of executing aiida-fans jobs.
 
     The only nodes you must provide are the `code` and `microstructure` inputs.
@@ -199,15 +196,11 @@ def execute_fans(
                 submit(calcjob, inputs)  # type: ignore
 
 
-def submit_fans(
-    inputs: dict[str, Any]
-):
+def submit_fans(inputs: dict[str, Any]):
     """See `execute_fans` for implementation and usage details."""
     execute_fans("Submit", inputs)
 
 
-def run_fans(
-    inputs: dict[str, Any]
-):
+def run_fans(inputs: dict[str, Any]):
     """See `execute_fans` for implementation and usage details."""
     execute_fans("Run", inputs)

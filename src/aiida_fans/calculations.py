@@ -26,10 +26,7 @@ class FansCalculation(CalcJob):
         spec.inputs["metadata"]["label"].default = "FANS"
         ## Processing Power
         spec.inputs["metadata"]["options"]["withmpi"].default = True
-        spec.inputs["metadata"]["options"]["resources"].default = {
-            "num_machines": 1,
-            "num_mpiprocs_per_machine": 4
-        }
+        spec.inputs["metadata"]["options"]["resources"].default = {"num_machines": 1, "num_mpiprocs_per_machine": 4}
         ## Filenames
         spec.inputs["metadata"]["options"]["input_filename"].default = "input.json"
         spec.inputs["metadata"]["options"]["output_filename"].default = "output.h5"
@@ -72,14 +69,16 @@ class FansCalculation(CalcJob):
         """Prepare the calculation for submission."""
         # Stashed Strategy:
         if self.options.stashed_microstructure:
-            ms_filepath: Path = Path(self.inputs.code.computer.get_workdir()) / \
-                                "stash/microstructures" / \
-                                self.inputs.microstructure.file.filename
+            ms_filepath: Path = (
+                Path(self.inputs.code.computer.get_workdir())
+                / "stash/microstructures"
+                / self.inputs.microstructure.file.filename
+            )
             # if microstructure does not exist in stash, make it
             if not ms_filepath.is_file():
                 ms_filepath.parent.mkdir(parents=True, exist_ok=True)
-                with self.inputs.microstructure.file.open(mode='rb') as source:
-                    with ms_filepath.open(mode='wb') as target:
+                with self.inputs.microstructure.file.open(mode="rb") as source:
+                    with ms_filepath.open(mode="wb") as target:
                         copyfileobj(source, target)
 
             # input.json as dict
@@ -90,11 +89,11 @@ class FansCalculation(CalcJob):
                 dump(input_dict, json, indent=4)
         # Fragmented Strategy:
         else:
-            datasetname : str = self.inputs.microstructure.datasetname.value
-            with folder.open("microstructure.h5","bw") as f_dest:
-                with h5File(f_dest,"w") as h5_dest:
+            datasetname: str = self.inputs.microstructure.datasetname.value
+            with folder.open("microstructure.h5", "bw") as f_dest:
+                with h5File(f_dest, "w") as h5_dest:
                     with self.inputs.microstructure.file.open(mode="rb") as f_src:
-                        with h5File(f_src,'r') as h5_src:
+                        with h5File(f_src, "r") as h5_src:
                             h5_src.copy(datasetname, h5_dest, name=datasetname)
 
             # input.json as dict
@@ -117,8 +116,6 @@ class FansCalculation(CalcJob):
         calcinfo.local_copy_list = []
         calcinfo.remote_copy_list = []
         calcinfo.retrieve_list = [codeinfo.stdout_name, codeinfo.stderr_name]
-        calcinfo.retrieve_temporary_list = [
-            self.options.output_filename
-        ]
+        calcinfo.retrieve_temporary_list = [self.options.output_filename]
 
         return calcinfo
