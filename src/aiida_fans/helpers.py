@@ -19,7 +19,10 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
         ## Problem Type and Material Model
         "problem_type": job.inputs.problem_type.value,
         "matmodel": job.inputs.matmodel.value,
-        "material_properties": job.inputs.material_properties.get_dict(),
+        "material_properties": {
+            "bulk_modulus": [mat.base.attributes.get("bulk_modulus") for mat in job.inputs.material_properties],
+            "shear_modulus": [mat.base.attributes.get("shear_modulus") for mat in job.inputs.material_properties],
+        },
         ## Solver Settings
         "method": job.inputs.method.value,
         "n_it": job.inputs.n_it.value,
