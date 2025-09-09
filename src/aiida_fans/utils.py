@@ -24,20 +24,21 @@ def aiida_type(value: Any) -> type[Data]:
     """
     match value:
         case str():
-            return DataFactory("core.str") # Str
+            return DataFactory("core.str")  # Str
         case int():
-            return DataFactory("core.int") # Int
+            return DataFactory("core.int")  # Int
         case float():
-            return DataFactory("core.float") # Float
+            return DataFactory("core.float")  # Float
         case list():
-            return DataFactory("core.list") # List
+            return DataFactory("core.list")  # List
         case dict():
             if all(map(lambda t: isinstance(t, ndarray), value.values())):
-                return DataFactory("core.array") # ArrayData
+                return DataFactory("core.array")  # ArrayData
             else:
-                return DataFactory("core.dict") # Dict
+                return DataFactory("core.dict")  # Dict
         case _:
             raise NotImplementedError(f"Received an input of value:  {value}    with type:  {type(value)}")
+
 
 def fetch(label: str, value: Any) -> list[Node]:
     """Return a list of nodes matching the label and value provided.
@@ -50,25 +51,30 @@ def fetch(label: str, value: Any) -> list[Node]:
         list[Node]: the list of nodes matching the give criteria
     """
     datatype = aiida_type(value)
-    nodes = QueryBuilder(
-    ).append(cls=datatype, tag="n"
-    ).add_filter("n", {"label": label}
-    ).add_filter("n", {"attributes": {"==": datatype(value).base.attributes.all}}
-    ).all(flat=True)
+    nodes = (
+        QueryBuilder()
+        .append(cls=datatype, tag="n")
+        .add_filter("n", {"label": label})
+        .add_filter("n", {"attributes": {"==": datatype(value).base.attributes.all}})
+        .all(flat=True)
+    )
 
     if datatype != DataFactory("core.array"):
-        return nodes # type: ignore
+        return nodes  # type: ignore
     else:
         array_nodes = []
         for array_node in nodes:
             array_value = {
-                k: v for k, v in [
-                    (name, array_node.get_array(name)) for name in array_node.get_arraynames() # type: ignore
+                k: v
+                for k, v in [
+                    (name, array_node.get_array(name))
+                    for name in array_node.get_arraynames()  # type: ignore
                 ]
             }
             if arraydata_equal(value, array_value):
                 array_nodes.append(array_node)
         return array_nodes
+
 
 def generate(label: str, value: Any) -> Node:
     """Return a single node with the label and value provided.
@@ -93,6 +99,7 @@ def generate(label: str, value: Any) -> Node:
     else:
         raise RuntimeError
 
+
 def convert(ins: dict[str, Any], path: list[str] = []):
     """Takes a dictionary of inputs and converts the values to their respective Nodes.
 
@@ -108,7 +115,8 @@ def convert(ins: dict[str, Any], path: list[str] = []):
         else:
             ins[k] = generate(".".join([*path, k]), v)
 
-def compile_query(ins: dict[str,Any], qb: QueryBuilder) -> None:
+
+def compile_query(ins: dict[str, Any], qb: QueryBuilder) -> None:
     """Interate over the converted input dictionary and append to the QueryBuilder for each node.
 
     Args:
@@ -121,18 +129,10 @@ def compile_query(ins: dict[str,Any], qb: QueryBuilder) -> None:
         if k in ["microstructure", "error_parameters"] and isinstance(v, dict):
             compile_query(v, qb)
         else:
-            qb.append(
-                cls=type(v),
-                with_outgoing="calc",
-                filters={"pk": v.pk}
-            )
+            qb.append(cls=type(v), with_outgoing="calc", filters={"pk": v.pk})
 
 
-def execute_fans(
-        mode: Literal["Submit", "Run"],
-        inputs: dict[str, Any],
-        strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
-    ):
+def execute_fans(mode: Literal["Submit", "Run"], inputs: dict[str, Any]):
     """This utility function simplifies the process of executing aiida-fans jobs.
 
     The only nodes you must provide are the `code` and `microstructure` inputs.
@@ -169,15 +169,7 @@ def execute_fans(
     execute_fans("Submit", inputs, "Stashed")
     ```
     """
-    # update inputs with metadata.options.stash if necessary:
-    match strategy:
-        case "Stashed":
-            calcjob = CalculationFactory("fans.stashed")
-        case "Fragmented":
-            calcjob = CalculationFactory("fans.fragmented")
-        case _:
-            print("ERROR: Calculation strategy must be either 'Fragmented' or 'Stashed'.")
-            raise ValueError
+    calcjob = CalculationFactory("fans")
 
     # move results_prefix and results items to metadata.options
     inputs.setdefault("metadata", {}).setdefault("options", {})["results_prefix"] = inputs.pop("results_prefix", "")
@@ -191,7 +183,7 @@ def execute_fans(
     compile_query(inputs, qb)
     results = qb.all(flat=True)
     if (count := len(results)) != 0:
-        print(f"It seems this calculation has already been performed {count} time{"s" if count > 1 else ""}. {results}")
+        print(f"It seems this calculation has already been performed {count} time{'s' if count > 1 else ''}. {results}")
         confirmation = input("Are you sure you want to rerun it? [y/N] ").strip().lower() in ["y", "yes"]
     else:
         confirmation = True
@@ -199,20 +191,16 @@ def execute_fans(
     if confirmation:
         match mode:
             case "Run":
-                run(calcjob, inputs) # type: ignore
+                run(calcjob, inputs)  # type: ignore
             case "Submit":
-                submit(calcjob, inputs) # type: ignore
+                submit(calcjob, inputs)  # type: ignore
 
-def submit_fans(
-    inputs: dict[str, Any],
-    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
-):
-    """See `execute_fans` for implementation and usage details."""
-    execute_fans("Submit", inputs, strategy)
 
-def run_fans(
-    inputs: dict[str, Any],
-    strategy: Literal["Fragmented", "Stashed"] = "Fragmented",
-):
+def submit_fans(inputs: dict[str, Any]):
     """See `execute_fans` for implementation and usage details."""
-    execute_fans("Run", inputs, strategy)
+    execute_fans("Submit", inputs)
+
+
+def run_fans(inputs: dict[str, Any]):
+    """See `execute_fans` for implementation and usage details."""
+    execute_fans("Run", inputs)
