@@ -1,4 +1,4 @@
-"""CalcJob subclasses for aiida-fans calculations."""
+"""Subclasses of CalcJob for aiida-fans calculations."""
 
 from json import dump
 from pathlib import Path
@@ -11,6 +11,7 @@ from aiida.engine.processes.process_spec import CalcJobProcessSpec
 from aiida.orm import Dict, Float, Int, List, SinglefileData, Str
 from h5py import File as h5File
 
+from aiida_fans.data import MaterialData
 from aiida_fans.helpers import make_input_dict
 
 
@@ -47,7 +48,8 @@ class FansCalculation(CalcJob):
         ## Problem Type and Material Model
         spec.input("problem_type", valid_type=Str)
         spec.input("matmodel", valid_type=Str)
-        spec.input("material_properties", valid_type=Dict)
+        spec.input("material_phases", valid_type=Dict)
+        spec.input_namespace("material_properties", valid_type=MaterialData, dynamic=True)
         ## Solver Settings
         spec.input("method", valid_type=Str)
         spec.input("n_it", valid_type=Int)
