@@ -27,6 +27,8 @@ dependencies = [
 "fans" = "aiida_fans.calculations:FansCalculation"
 [project.entry-points."aiida.parsers"]
 "fans" = "aiida_fans.parsers:FansParser"
+[project.entry-points."aiida.data"]
+"fans" = "aiida_fans.data:MaterialData"
 
 # Build System
 [build-system]
