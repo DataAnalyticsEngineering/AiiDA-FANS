@@ -1,4 +1,4 @@
-"""Parser subclass for aiida-fans calculations."""
+"""Subclass of Parser for aiida-fans calculations."""
 
 from pathlib import Path
 
