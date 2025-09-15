@@ -2,8 +2,8 @@
 name = "aiida-fans"
 dynamic = ["version"]
 description = "AiiDA plugin for FANS, an FFT-based homogenization solver."
-urls = {Documentation = "http://aiida-fans.readthedocs.io/en/latest/", Source = "https://github.com/ethan-shanahan/aiida-fans" }
-authors = [{name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com"}]
+urls = { Documentation = "http://aiida-fans.readthedocs.io/en/latest/", Source = "https://github.com/ethan-shanahan/aiida-fans" }
+authors = [{ name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com" }]
 readme = "README.md"
 license = "LGPL-3.0-or-later"
 license-files = ["LICENSE"]
@@ -13,13 +13,13 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: Science/Research",
     "Development Status :: 3 - Alpha",
-    "Framework :: AiiDA"
+    "Framework :: AiiDA",
 ]
 keywords = ["aiida", "fans", "plugin"]
 requires-python = ">=3.11"
 dependencies = [
     "aiida-core>=2.6",
-    "h5py"
+    "h5py",
 ]
 
 # Entry Points
@@ -41,34 +41,35 @@ build-backend = "setuptools.build_meta"
 channels = ["conda-forge"]
 platforms = ["linux-64"]
 
-### pixi: features
-[tool.pixi.feature.py3]
-dependencies = {python = "3.*"}
-[tool.pixi.feature.build]
-pypi-dependencies = {build = "*"}
-tasks = {build-dist = "python -m build"}
-[tool.pixi.feature.sphinx]
-dependencies = {sphinx = "*", sphinx-book-theme = "*"}
-tasks = {build-docs = "sphinx-build -M html docs/source docs/build"}
-[tool.pixi.feature.marimo]
-dependencies = {marimo = "0.14.*"}
-tasks = {tutorial = "marimo edit tutorial.py"}
-[tool.pixi.feature.fans]
-dependencies = {fans = "0.4.*"}
-
-### pixi: default environment dependencies
+### pixi: default feature
 [tool.pixi.dependencies]
 aiida-core = "2.6.*"
 h5py = "*"
 pre-commit = "*"
-[tool.pixi.pypi-dependencies]
-aiida-fans = { path = ".", editable = true }
+
+### pixi: extra features
+[tool.pixi.feature.py3]
+dependencies = { python = "3.*" }
+[tool.pixi.feature.build]
+pypi-dependencies = { build = "*" }
+tasks = { build-dist = "python -m build" }
+[tool.pixi.feature.mkdocs]
+dependencies = { mkdocs-material = "*" }
+[tool.pixi.feature.marimo]
+dependencies = { marimo = "0.14.*" }
+tasks = { tutorial = "marimo edit tutorial.py" }
+[tool.pixi.feature.fans]
+dependencies = { fans = "0.4.*" }
+[tool.pixi.feature.self]
+pypi-dependencies = { aiida-fans = { path = ".", editable = true } }
+
 
 ### pixi: environments
 [tool.pixi.environments]
-dist = { no-default-feature = true, features = ["py3", "build"] } # CI env
-docs = { no-default-feature = true, features = ["py3", "sphinx"] } # CI env
-tutorial = { features = ["marimo", "fans"] }
+default = { features = ["self"] }  # Dev env
+dist = { no-default-feature = true, features = ["py3", "build"] }  # CI env
+docs = { no-default-feature = true, features = ["py3", "mkdocs"] }  # CI env
+tutorial = { no-default-feature = true, features = ["self", "marimo", "fans"] }  # User env
 
 
 ## Build Tools: setuptools_scm
@@ -80,29 +81,29 @@ version_file = "src/aiida_fans/_version.py"
 [tool.ruff]
 extend-exclude = [
     "conf.py",
-    "tutorial.py"
+    "tutorial.py",
 ]
 line-length = 120
 [tool.ruff.lint]
 ignore = [
-    'PLR2004',  # Magic value used in comparison
-    "D417"  # Documentation for every function parameter
+    "PLR2004",  # Magic value used in comparison
+    "D417",  # Documentation for every function parameter
 ]
 select = [
-    'E',  # pydocstyle
-    'W',  # pydocstyle
+    "E",  # pydocstyle
+    "W",  # pydocstyle
     "D",  # pydocstyle
-    'F',  # pyflakes
-    'I',  # isort
-    'N',  # pep8-naming
-    'PLC',  # pylint-convention
-    'PLE',  # pylint-error
-    'PLR',  # pylint-refactor
-    'PLW',  # pylint-warning
-    'RUF'  # ruff
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "PLC",  # pylint-convention
+    "PLE",  # pylint-error
+    "PLR",  # pylint-refactor
+    "PLW",  # pylint-warning
+    "RUF",  # ruff
 ]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"  # Allow unused variables when underscore-prefixed.
-pydocstyle = {convention = "google"}
+pydocstyle = { convention = "google" }
 
 ## Docs Tools: sphinx
 # None

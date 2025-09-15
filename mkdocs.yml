@@ -1,0 +1,65 @@
+site_name: AiiDA-FANS
+copyright: Copyright &copy; 2025 Institut für Mechanik | Universität Stuttgart
+site_url: https://aiida-fans.readthedocs.io/en/latest/
+repo_url: https://github.com/DataAnalyticsEngineering/AiiDA-FANS
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  logo: assets/aiida-fans-logo.png
+  favicon: assets/aiida-fans-logo.png
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: yellow
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.footer
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - content.action.edit
+
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/DataAnalyticsEngineering/AiiDA-FANS
+    - icon: material/email
+      link: mailto:ethan.shanahan@gmail.com
+
+markdown_extensions:
+  - abbr
+  - footnotes
+  - admonition
+  - pymdownx.details
+  - pymdownx.betterem
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - License: license.md
