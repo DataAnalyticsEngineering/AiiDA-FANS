@@ -1,22 +1,21 @@
-name: Release Package
+name: Package
 
 on:
   release:
-   types: [released]
+   types: [ released ]
 
 jobs:
   build:
-    name: Generate release builds
+    name: Generate Release Builds
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Pixi
-        uses: prefix-dev/setup-pixi@v0.8.1
+        uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          pixi-version: v0.40.2
-          cache: false
+          pixi-version: v0.55.0
           environments: dist
           activate-environment: true
       - name: Build distributions
@@ -29,7 +28,7 @@ jobs:
 
   publish:
     needs: build
-    name: Upload release to PyPI
+    name: Upload Release to PyPI
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
