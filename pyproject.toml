@@ -2,7 +2,7 @@
 name = "aiida-fans"
 dynamic = ["version"]
 description = "AiiDA plugin for FANS, an FFT-based homogenization solver."
-urls = { Documentation = "http://aiida-fans.readthedocs.io/en/latest/", Source = "https://github.com/ethan-shanahan/aiida-fans" }
+urls = { Documentation = "https://dataanalyticsengineering.github.io/AiiDA-FANS/", Source = "https://github.com/DataAnalyticsEngineering/AiiDA-FANS" }
 authors = [{ name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com" }]
 readme = "README.md"
 license = "LGPL-3.0-or-later"
@@ -104,6 +104,3 @@ select = [
 ]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"  # Allow unused variables when underscore-prefixed.
 pydocstyle = { convention = "google" }
-
-## Docs Tools: sphinx
-# None
