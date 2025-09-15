@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://aiida-fans.readthedocs.io/en/latest/</loc>
+         <lastmod>2025-09-15</lastmod>
+    </url>
+    <url>
+         <loc>https://aiida-fans.readthedocs.io/en/latest/installation/</loc>
+         <lastmod>2025-09-15</lastmod>
+    </url>
+    <url>
+         <loc>https://aiida-fans.readthedocs.io/en/latest/license/</loc>
+         <lastmod>2025-09-15</lastmod>
+    </url>
+    <url>
+         <loc>https://aiida-fans.readthedocs.io/en/latest/usage/</loc>
+         <lastmod>2025-09-15</lastmod>
+    </url>
+</urlset>
