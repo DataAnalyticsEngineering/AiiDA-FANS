@@ -43,7 +43,7 @@ platforms = ["linux-64"]
 
 ### pixi: default feature
 [tool.pixi.dependencies]
-aiida-core = "2.6.*"
+aiida-core = ">=2.6"
 h5py = "*"
 pre-commit = "*"
 
@@ -55,13 +55,15 @@ pypi-dependencies = { build = "*" }
 tasks = { build-dist = "python -m build" }
 [tool.pixi.feature.mkdocs]
 dependencies = { mkdocs-material = "*" }
-[tool.pixi.feature.marimo]
-dependencies = { marimo = "0.14.*" }
-tasks = { tutorial = "marimo edit tutorial.py" }
-[tool.pixi.feature.fans]
-dependencies = { fans = "0.4.*" }
 [tool.pixi.feature.self]
 pypi-dependencies = { aiida-fans = { path = ".", editable = true } }
+[tool.pixi.feature.fans]
+dependencies = { fans = "0.4.*" }
+[tool.pixi.feature.marimo]
+pypi-dependencies = { marimo = "*" }
+tasks = { tutorial = "marimo edit tutorial.py" }
+[tool.pixi.feature.rabbitmq]
+dependencies = { "aiida-core.services" = "*" }
 
 
 ### pixi: environments
@@ -69,7 +71,9 @@ pypi-dependencies = { aiida-fans = { path = ".", editable = true } }
 default = { features = ["self"] }  # Dev env
 dist = { no-default-feature = true, features = ["py3", "build"] }  # CI env
 docs = { no-default-feature = true, features = ["py3", "mkdocs"] }  # CI env
-tutorial = { no-default-feature = true, features = ["self", "marimo", "fans"] }  # User env
+remote = { no-default-feature = true, features = ["py3", "self", "fans", "rabbitmq"] }  # User env
+tutorial = { no-default-feature = true, features = ["py3", "self", "fans", "marimo"] }  # User env
+remote-tutorial = { no-default-feature = true, features = ["py3", "self", "fans", "rabbitmq", "marimo"] }  # User env
 
 
 ## Build Tools: setuptools_scm
