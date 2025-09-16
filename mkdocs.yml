@@ -66,3 +66,6 @@ nav:
   - Installation: installation.md
   - Usage: usage.md
   - License: license.md
+  - Tutorial:
+    - Tutorial Installation: tutorial/installation.md
+    - Tutorial Usage: tutorial/usage.md
