@@ -11,15 +11,13 @@ This is a plugin for [AiiDA][aiida-link] that facilitates the use of [FANS][FANS
 
 The design goals of this plugin are to provide a simple but powerful user interface to FANS. In doing so, the plugin packages additional utilities to eliviate some of the burdens we perceive in the traditional AiiDA workflow.
 
-
 ## Installation
 
-AiiDA-FANS is available on the PyPI and conda-forge channels. Our recommended method of installing AiiDA-FANS is to use the pixi package manager, in which case `pixi add aiida-fans` will install the plugin from conda-forge by default, as well as its dependencies: python, AiiDA, and h5py. 
+AiiDA-FANS is available on the PyPI and conda-forge channels. Our recommended method of installing AiiDA-FANS is to use the [pixi][pixi-link] package manager, in which case `pixi add aiida-fans` will install the plugin from conda-forge by default, as well as its dependencies: python, aiida-core, and h5py.
 
 Otherwise, the package can be installed with pip by `pip install aiida-fans` or with mamba by `mamba install aiida-fans`.
 
 In any case, the user is responsible for installing FANS and ensuring it is accessible to the plugin. This can be achieved without need for further customisation by having FANS accessible on the PATH environment variable. Please consult the [FANS repository][FANS-link] for more information on the installation of this software.
-
 
 ## Usage
 
@@ -31,11 +29,11 @@ This plugin offers some utilities to help smooth the AiiDA user experience. Name
 
 ## Tutorial
 
-A tutorial accompanies this plugin. To try it out: clone this repository, cd into it, run `pixi install -e tutorial` and `marimo run tutorial/tutorial.py`. For more information before you begin, take a look at `./tutorial/README.md`.
+A tutorial accompanies this plugin. To try it out: clone this repository, cd into it, run `pixi shell -e tutorial` and `pixi run tutorial`. The marimo notebook should be served locally. For more information before you begin, take a look at the [documentation][tutorial-docs-link].
 
 ## Contact
 
-You can contact ethan.shanahan@gmail.com with any questions regarding the AiiDA-FANS plugin and accompanying tutorial.
+You can contact <ethan.shanahan@gmail.com> with any questions regarding the AiiDA-FANS plugin and accompanying tutorial.
 
 <!-- URLs -->
 [pypi-badge]: https://badge.fury.io/py/aiida-fans.svg
@@ -43,7 +41,10 @@ You can contact ethan.shanahan@gmail.com with any questions regarding the AiiDA-
 [ci-badge]: https://github.com/ethan-shanahan/aiida-fans/actions/workflows/ci.yml/badge.svg?branch=main
 [ci-link]: https://github.com/ethan-shanahan/aiida-fans/actions
 [docs-badge]: https://readthedocs.org/projects/aiida-fans/badge
-[docs-link]: http://aiida-fans.readthedocs.io/
+[docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/
+[tutorial-docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/tutorial/installation/
+[AiiDA-link]: https://www.aiida.net/
 [AiiDA-docs-link]: https://aiida-core.readthedocs.io/
 [AiiDA-install-link]: https://aiida.readthedocs.io/projects/aiida-core/en/latest/installation/index.html
 [FANS-link]: https://github.com/DataAnalyticsEngineering/FANS
+[pixi-link]: https://pixi.sh/latest/
