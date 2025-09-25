@@ -1,21 +1,22 @@
 # AiiDA-FANS
 
-[![PyPI Package][pypi-badge]][pypi-link]
+[![Release][release-badge]][release-link]
+[![Downloads][conda-badge]][conda-link]
+[![License][license-badge]][license-link]
 [![Docs Status][docs-badge]][docs-link]
-[![Build Status][ci-badge]][ci-link]
 
 > [!WARNING]  
 > Critical content demanding immediate user attention due to potential risks.
 
-This is a plugin for [AiiDA][aiida-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
+This is a plugin for [AiiDA][AiiDA-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
 
 The design goals of this plugin are to provide a simple but powerful user interface to FANS. In doing so, the plugin packages additional utilities to eliviate some of the burdens we perceive in the traditional AiiDA workflow.
 
 ## Installation
 
-AiiDA-FANS is available on the PyPI and conda-forge channels. Our recommended method of installing AiiDA-FANS is to use the [pixi][pixi-link] package manager, in which case `pixi add aiida-fans` will install the plugin from conda-forge by default, as well as its dependencies: python, aiida-core, and h5py.
+AiiDA-FANS is available on the conda-forge package channel. Our recommended method of installing AiiDA-FANS is to use the [Pixi][Pixi-link] package manager, in which case `pixi add aiida-fans` will add the plugin to your project manifest (such as a pyproject.toml).
 
-Otherwise, the package can be installed with pip by `pip install aiida-fans` or with mamba by `mamba install aiida-fans`.
+Otherwise, the package can be installed with conda by `conda install aiida-fans --channel conda-forge`.
 
 In any case, the user is responsible for installing FANS and ensuring it is accessible to the plugin. This can be achieved without need for further customisation by having FANS accessible on the PATH environment variable. Please consult the [FANS repository][FANS-link] for more information on the installation of this software.
 
@@ -36,15 +37,18 @@ A tutorial accompanies this plugin. To try it out: clone this repository, cd int
 You can contact <ethan.shanahan@gmail.com> with any questions regarding the AiiDA-FANS plugin and accompanying tutorial.
 
 <!-- URLs -->
-[pypi-badge]: https://badge.fury.io/py/aiida-fans.svg
-[pypi-link]: https://badge.fury.io/py/aiida-fans
-[ci-badge]: https://github.com/ethan-shanahan/aiida-fans/actions/workflows/ci.yml/badge.svg?branch=main
-[ci-link]: https://github.com/ethan-shanahan/aiida-fans/actions
-[docs-badge]: https://readthedocs.org/projects/aiida-fans/badge
+[release-badge]: https://img.shields.io/github/v/release/dataanalyticsengineering/AiiDA-FANS?label=Release
+[release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
+[conda-badge]: https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads
+[conda-link]: https://anaconda.org/conda-forge/aiida-fans
+[license-badge]: https://img.shields.io/github/license/ethan-shanahan/pokemanager?label=License
+[license-link]: https://www.gnu.org/licenses/lgpl-3.0.en.html
+[docs-badge]: https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg
 [docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/
+
 [tutorial-docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/tutorial/installation/
 [AiiDA-link]: https://www.aiida.net/
 [AiiDA-docs-link]: https://aiida-core.readthedocs.io/
 [AiiDA-install-link]: https://aiida.readthedocs.io/projects/aiida-core/en/latest/installation/index.html
 [FANS-link]: https://github.com/DataAnalyticsEngineering/FANS
-[pixi-link]: https://pixi.sh/latest/
+[Pixi-link]: https://pixi.sh/latest/
