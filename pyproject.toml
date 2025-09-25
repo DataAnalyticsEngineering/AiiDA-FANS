@@ -46,6 +46,14 @@ pre-commit = ">=4.3.0,<5"
 [tool.pixi.pypi-dependencies]
 aiida-fans = { path = ".", editable = true }
 
+[tool.pixi.tasks]
+rabbit_start = "rabbitmq-server -detached"
+daemon_start = "verdi daemon start"
+start = [{ task = "rabbit_start" }, { task = "daemon_start" }]
+daemon_stop = "verdi daemon stop"
+rabbit_stop = "rabbitmqctl stop"
+stop = [{ task = "daemon_stop" }, { task = "rabbit_stop" }]
+
 ### pixi: extra features
 [tool.pixi.feature.py3]
 dependencies = { python = "3.*" }
