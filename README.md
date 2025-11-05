@@ -6,7 +6,7 @@
 [![Docs Status][docs-badge]][docs-link]
 
 > [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
+> The AiiDA-Fans plugin is under active development. Changes can and do occur regularly.
 
 This is a plugin for [AiiDA][AiiDA-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
 
