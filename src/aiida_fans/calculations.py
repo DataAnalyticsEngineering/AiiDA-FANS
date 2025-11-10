@@ -47,8 +47,10 @@ class FansCalculation(CalcJob):
         ## Problem Type and Material Model
         spec.input("problem_type", valid_type=Str)
         spec.input("matmodel", valid_type=Str)
+        spec.input("strain_type", valid_type=Str)
         spec.input("material_properties", valid_type=Dict)
         ## Solver Settings
+        spec.input("FE_type", valid_type=Str)
         spec.input("method", valid_type=Str)
         spec.input("n_it", valid_type=Int)
         spec.input_namespace("error_parameters")
@@ -59,7 +61,7 @@ class FansCalculation(CalcJob):
         spec.input("macroscale_loading", valid_type=List)
 
         # Output Ports
-        spec.output("output", valid_type=SinglefileData)  # * Should this be RemoteData to avoid copying?
+        spec.output("output", valid_type=SinglefileData)
         spec.output("results", valid_type=Dict, required=False)
 
         # Exit Codes

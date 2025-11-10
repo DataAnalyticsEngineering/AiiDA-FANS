@@ -9,18 +9,19 @@ from numpy import allclose, ndarray
 def make_input_dict(job: CalcJob) -> dict[str, Any]:
     """Prepares a dictionary that maps to an input.json from calcjob inputs."""
     return {
-        ## Microstructure Definition
+        ## Microstructure definition
         "microstructure": {
             "filepath": job.inputs.microstructure.file.get_remote_path(),
             "datasetname": job.inputs.microstructure.datasetname.value,
             "L": job.inputs.microstructure.L.get_list(),
         },
-        "results_prefix": job.inputs.metadata.options.results_prefix,
-        ## Problem Type and Material Model
+        ## Problem type and material model
         "problem_type": job.inputs.problem_type.value,
         "matmodel": job.inputs.matmodel.value,
+        "strain_type": job.inputs.strain_type.value,
         "material_properties": job.inputs.material_properties.get_dict(),
-        ## Solver Settings
+        ## Solver settings
+        "FE_type": job.inputs.FE_type.value,
         "method": job.inputs.method.value,
         "n_it": job.inputs.n_it.value,
         "error_parameters": {
@@ -28,9 +29,10 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
             "type": job.inputs.error_parameters.type.value,
             "tolerance": job.inputs.error_parameters.tolerance.value,
         },
-        ## Macroscale Loading Conditions
+        ## Macroscale loading conditions
         "macroscale_loading": job.inputs.macroscale_loading.get_list(),
-        ## Results Specification
+        ## Results specification (Optional)
+        "results_prefix": job.inputs.metadata.options.results_prefix,
         "results": job.inputs.metadata.options.results,
     }
 
