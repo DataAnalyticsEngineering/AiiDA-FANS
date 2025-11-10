@@ -53,6 +53,9 @@ markdown_extensions:
   - pymdownx.betterem
   - pymdownx.tabbed:
       alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - pymdownx.highlight:
       line_spans: __span
   - pymdownx.inlinehilite
@@ -62,4 +65,7 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Usage: usage.md
-  - License: license.md
+  - License: lgpl-attachment.md
+  - Tutorial:
+    - Tutorial Installation: tutorial/installation.md
+    - Tutorial Usage: tutorial/usage.md
