@@ -26,7 +26,7 @@ To use this plugin, you must first establish an AiiDA profile, computer, and cod
 
 For general information on the usage of AiiDA you should refer to the [AiiDA documentation][AiiDA-docs-link], and for the usage of FANS refer to its [repository][FANS-link].
 
-This plugin offers some utilities to help smooth the AiiDA user experience. Namely, the `utils.run_fans` function which allows you to provide the inputs for a job as a dictionary of mostly pythonic values. This utility will parse these inputs and automatically use any appropriate existing nodes it finds in your profile before making new nodes where necessary. For more information on this plugin's specifics and how to use the utilities, please refer to the [documentation][docs-link].
+This plugin offers some utilities to help smooth the AiiDA user experience. Namely, the `utils.execute_fans` function which allows you to provide the inputs for a job as a dictionary of mostly pythonic values. This utility will parse these inputs and automatically use any appropriate existing nodes it finds in your profile before making new nodes where necessary. For more information on this plugin's specifics and how to use the utilities, please refer to the [documentation][docs-link].
 
 ## Tutorial
 
