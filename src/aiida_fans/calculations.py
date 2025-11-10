@@ -61,7 +61,7 @@ class FansCalculation(CalcJob):
         spec.input("macroscale_loading", valid_type=List)
 
         # Output Ports
-        spec.output("output", valid_type=SinglefileData)  # * Should this be RemoteData to avoid copying?
+        spec.output("output", valid_type=SinglefileData)
         spec.output("results", valid_type=Dict, required=False)
 
         # Exit Codes

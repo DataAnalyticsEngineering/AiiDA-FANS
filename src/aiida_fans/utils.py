@@ -171,10 +171,6 @@ def execute_fans(mode: Literal["submit", "run"], inputs: dict[str, Any]):
     """
     calcjob = CalculationFactory("fans")
 
-    # move results_prefix and results items to metadata.options
-    inputs.setdefault("metadata", {}).setdefault("options", {})["results_prefix"] = inputs.pop("results_prefix", "")
-    inputs.setdefault("metadata", {}).setdefault("options", {})["results"] = inputs.pop("results", [])
-
     # fetch the inputs if possible or otherwise create them
     convert(inputs)
 
