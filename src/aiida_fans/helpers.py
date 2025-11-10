@@ -11,7 +11,7 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
     return {
         ## Microstructure Definition
         "microstructure": {
-            "filepath": None,  # path to stashed microstructure, must be overwritten by impl
+            "filepath": job.inputs.microstructure.file.get_remote_path(),
             "datasetname": job.inputs.microstructure.datasetname.value,
             "L": job.inputs.microstructure.L.get_list(),
         },
