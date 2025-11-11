@@ -1,10 +1,11 @@
 # AiiDA-FANS
 
-[![PyPI Package][pypi-badge]][pypi-link]
+[![Release][release-badge]][release-link]
+[![Downloads][conda-badge]][conda-link]
+[![License][license-badge]][license-link]
 [![Docs Status][docs-badge]][docs-link]
-[![Build Status][ci-badge]][ci-link]
 
-An AiiDA plugin to integrate with FANS. Use the Fourier-Accelerated Nodal Solver (FANS) to calculate microscale multiphysics problems with the automated data tracking of AiiDA. FANS is an efficient, parallelised, FFT-based homogenisation solver, making AiiDA ideal to manage its very high throughput capabilities. The AiiDA-FANS plugin is an open-source project developed at the Institute of Applied Mechanics, Univeristy of Stuttgart, in association with the developers of FANS.
+An [AiiDA](https://www.aiida.net/) plugin to integrate with [FANS](https://github.com/DataAnalyticsEngineering/FANS). Use the Fourier-Accelerated Nodal Solver (FANS) to calculate microscale multiphysics problems with the automated data tracking of AiiDA. FANS is an efficient, parallelised, FFT-based homogenisation solver, making AiiDA ideal to manage its very high throughput capabilities. The AiiDA-FANS plugin is an open-source project developed at the Institute of Applied Mechanics, Univeristy of Stuttgart, in association with the developers of FANS.
 
 !!! warning
     AiiDA-FANS is under active development and should be considered in alpha. Breaking changes will occur.
@@ -30,12 +31,11 @@ The writing of a research paper regarding the AiiDA-FANS plugin is underway. Unt
 TODO: Who do we acknowledge?
 
 <!-- URLs -->
-[pypi-badge]: https://badge.fury.io/py/aiida-fans.svg
-[pypi-link]: https://badge.fury.io/py/aiida-fans
-[ci-badge]: https://github.com/ethan-shanahan/aiida-fans/actions/workflows/ci.yml/badge.svg?branch=main
-[ci-link]: https://github.com/ethan-shanahan/aiida-fans/actions
-[docs-badge]: https://readthedocs.org/projects/aiida-fans/badge
-[docs-link]: http://aiida-fans.readthedocs.io/
-[AiiDA-docs-link]: https://aiida-core.readthedocs.io/
-[AiiDA-install-link]: https://aiida.readthedocs.io/projects/aiida-core/en/latest/installation/index.html
-[FANS-link]: https://github.com/DataAnalyticsEngineering/FANS
+[release-badge]: https://img.shields.io/github/v/release/dataanalyticsengineering/AiiDA-FANS?label=Release
+[release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
+[conda-badge]: https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads
+[conda-link]: https://anaconda.org/conda-forge/aiida-fans
+[license-badge]: https://img.shields.io/github/license/dataanalyticsengineering/AiiDA-FANS?label=License
+[license-link]: https://www.gnu.org/licenses/lgpl-3.0.en.html
+[docs-badge]: https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg
+[docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/

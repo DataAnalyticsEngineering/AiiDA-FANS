@@ -63,9 +63,15 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Installation: installation.md
-  - Usage: usage.md
-  - License: lgpl-attachment.md
+  - Introduction:
+    - Getting Started: introduction/getting-started.md
+    - Installing the Plugin: introduction/installing-the-plugin.md
+    - Adding Microstructure Data: introduction/adding-microstructure-data.md
+    - Running FANS: introduction/running-fans.md
   - Tutorial:
-    - Tutorial Installation: tutorial/installation.md
-    - Tutorial Usage: tutorial/usage.md
+    - Installing the Tutorial: tutorial/installing-the-tutorial.md
+    - Using the Tutorial: tutorial/using-the-tutorial.md
+  - Reference:
+    - Plugin API: reference/plugin-api.md
+    - Utilities API: reference/utils-api.md
+  - License: lgpl-attachment.md
