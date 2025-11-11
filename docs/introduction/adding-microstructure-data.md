@@ -28,6 +28,6 @@ RemoteData(
 ).store()
 ```
 
-You can write this in a python script and run it, or use AiiDA's interactive shell with `verdi shell`. If you use the interactive shell, you can omit `load_profile` as AiiDA will automatically load the default profile. Remember to change `COMPUTER_LABEL` and `MICROSTRUCTURE_PATH` to the appropriate values.
+You can write this in a python script and run it, or use AiiDA's interactive shell with `verdi shell`. If you use the interactive shell, you can omit `load_profile` as AiiDA will automatically load the default profile. Remember to change `COMPUTER_LABEL` and `MICROSTRUCTURE_PATH` to the appropriate values. After storing the node, you can check the nodes on your profile with `verdi node list` and expose details of a particular node with `verdi node show <pk>`.
 
-After this, you can check the nodes on your profile with `verdi node list` and expose details of a particular node with `verdi node show <pk>`.
+To reuse this node when executing `FansCalculation` jobs, you can use `load_node(label="microstructure.file")` as long as only one node exists with the provided label. If you intend on using multiple microstructure files, assign them identifiable labels.
