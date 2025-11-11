@@ -41,7 +41,7 @@ You can contact <ethan.shanahan@gmail.com> with any questions regarding the AiiD
 [release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
 [conda-badge]: https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads
 [conda-link]: https://anaconda.org/conda-forge/aiida-fans
-[license-badge]: https://img.shields.io/github/license/ethan-shanahan/pokemanager?label=License
+[license-badge]: https://img.shields.io/github/license/dataanalyticsengineering/AiiDA-FANS?label=License
 [license-link]: https://www.gnu.org/licenses/lgpl-3.0.en.html
 [docs-badge]: https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg
 [docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/
