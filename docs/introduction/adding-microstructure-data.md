@@ -14,7 +14,7 @@ Once you have a microstructure file, you must create a `RemoteData` node like so
 
 ```python
 from aiida import load_profile
-from aiida.orm import RemoteData load_computer
+from aiida.orm import RemoteData, load_computer
 
 load_profile()
 
