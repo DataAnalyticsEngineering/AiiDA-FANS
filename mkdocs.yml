@@ -68,6 +68,7 @@ nav:
     - Installing the Plugin: introduction/installing-the-plugin.md
     - Adding Microstructure Data: introduction/adding-microstructure-data.md
     - Running FANS: introduction/running-fans.md
+    - Analysing Results: introduction/analysing-results.md
   - Tutorial:
     - Installing the Tutorial: tutorial/installing-the-tutorial.md
     - Using the Tutorial: tutorial/using-the-tutorial.md
