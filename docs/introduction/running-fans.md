@@ -9,15 +9,15 @@ This plugin offers some utilities to help smooth the AiiDA user experience. Name
 For example, consider the material model input parameter,
 
 ```json
-"matmodel": "LinearElasticIsotropic"
+"FE_type": "HEX8"
 ```
 
-In the AiiDA database (i.e. graph), this corresponds to a node of type `Str` with the value `"LinearElasticIsotropic"`, and optionally we can label it with `"matmodel"`. When we run a `FansCalculation` job it must receive a `Str` node for the "matmodel" input. If a pythonic `str` is provided instead, AiiDA automatically converts it to an AiiDA `Str` and stores the node in the database. Doing it this way, if you run five linear elastic isotropic problems, you will end up with five identical unlabeled `Str` nodes in your database, each pointing to a different `CalcJob` node. Clearly, the better option would be to have one `Str` node point to five `CalcJob` nodes. This could be done by providing each invocation of the `FansCalculation` job with the same node. So you either have to memorise the primary key of the `Str` node valued `"LinearElasticIsotropic"`, or construct a query to fetch it. In this case, the query appears simple enough,
+In the AiiDA database (i.e. graph), this corresponds to a node of type `Str` with the value `"HEX8"`, and optionally we can label it with `"FE_type"`. When we run a `FansCalculation` job it must receive a `Str` node for the *FE_type* input. If a pythonic `str` is provided instead, AiiDA automatically converts it to an AiiDA `Str` and stores the node in the database. Doing it this way, if you run five simulations using hexahedral elements (HEX8), you will end up with five identical unlabeled `Str` nodes in your database, each pointing to a different `CalcJob` node. Clearly, the better option would be to have one `Str` node point to five `CalcJob` nodes. This could be done by providing each invocation of the `FansCalculation` job with the same node. So you either have to memorise the primary key of the `Str` node valued `"HEX8"`, or construct a query to fetch it. In this case, the query appears simple enough,
 
 ```python
 QueryBuilder()
 .append(cls=Str, tag="node")
-.add_filter("node", {"value": {"==": "LinearElasticIsotropic"}})
+.add_filter("node", {"value": {"==": "HEX8"}})
 .all(flat=True)
 ```
 
