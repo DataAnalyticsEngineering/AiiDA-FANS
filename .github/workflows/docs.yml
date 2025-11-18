@@ -19,4 +19,4 @@ jobs:
           environments: docs
           activate-environment: true
       - name: Build docs
-        run: mkdocs gh-deploy
+        run: pixi run deploy

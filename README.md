@@ -6,7 +6,7 @@
 [![Docs Status][docs-badge]][docs-link]
 
 > [!WARNING]  
-> The AiiDA-Fans plugin is under active development. Changes can and do occur regularly.
+> The AiiDA-FANS plugin is under active development. Changes can and do occur regularly.
 
 This is a plugin for [AiiDA][AiiDA-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
 
@@ -41,7 +41,7 @@ You can contact <ethan.shanahan@gmail.com> with any questions regarding the AiiD
 [release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
 [conda-badge]: https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads
 [conda-link]: https://anaconda.org/conda-forge/aiida-fans
-[license-badge]: https://img.shields.io/github/license/ethan-shanahan/pokemanager?label=License
+[license-badge]: https://img.shields.io/github/license/dataanalyticsengineering/AiiDA-FANS?label=License
 [license-link]: https://www.gnu.org/licenses/lgpl-3.0.en.html
 [docs-badge]: https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg
 [docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/
