@@ -8,7 +8,7 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 from aiida.common.folders import Folder
 from aiida.engine import CalcJob
 from aiida.engine.processes.process_spec import CalcJobProcessSpec
-from aiida.orm import Dict, Float, Int, List, SinglefileData, Str
+from aiida.orm import Dict, Float, Int, List, RemoteData, SinglefileData, Str
 from h5py import File as h5File
 
 from aiida_fans.helpers import make_input_dict
@@ -34,21 +34,22 @@ class FansCalculation(CalcJob):
         spec.inputs["metadata"]["options"]["parser_name"].default = "fans"
 
         # Custom Metadata
+        spec.input("metadata.options.fragment_microstructure", valid_type=bool, default=False)
         spec.input("metadata.options.results_prefix", valid_type=str, default="")
         spec.input("metadata.options.results", valid_type=list, default=[])
-        spec.input("metadata.options.stashed_microstructure", valid_type=bool, default=True)
 
         # Input Ports
         ## Microstructure Definition
         spec.input_namespace("microstructure")
-        spec.input("microstructure.file", valid_type=SinglefileData)
+        spec.input("microstructure.file", valid_type=RemoteData)
         spec.input("microstructure.datasetname", valid_type=Str)
         spec.input("microstructure.L", valid_type=List)
         ## Problem Type and Material Model
         spec.input("problem_type", valid_type=Str)
-        spec.input("matmodel", valid_type=Str)
-        spec.input("material_properties", valid_type=Dict)
+        spec.input("strain_type", valid_type=Str)
+        spec.input("materials", valid_type=List)
         ## Solver Settings
+        spec.input("FE_type", valid_type=Str)
         spec.input("method", valid_type=Str)
         spec.input("n_it", valid_type=Int)
         spec.input_namespace("error_parameters")
@@ -67,41 +68,17 @@ class FansCalculation(CalcJob):
 
     def prepare_for_submission(self, folder: Folder) -> CalcInfo:
         """Prepare the calculation for submission."""
-        # Stashed Strategy:
-        if self.options.stashed_microstructure:
-            ms_filepath: Path = (
-                Path(self.inputs.code.computer.get_workdir())
-                / "stash/microstructures"
-                / self.inputs.microstructure.file.filename
-            )
-            # if microstructure does not exist in stash, make it
-            if not ms_filepath.is_file():
-                ms_filepath.parent.mkdir(parents=True, exist_ok=True)
-                with self.inputs.microstructure.file.open(mode="rb") as source:
-                    with ms_filepath.open(mode="wb") as target:
-                        copyfileobj(source, target)
-
-            # input.json as dict
-            input_dict = make_input_dict(self)
-            input_dict["microstructure"]["filepath"] = str(ms_filepath)
-            # write input.json to working directory
-            with folder.open(self.options.input_filename, "w", "utf8") as json:
-                dump(input_dict, json, indent=4)
-        # Fragmented Strategy:
-        else:
+        input_dict = make_input_dict(self)
+        if self.options.fragment_microstructure:
+            input_dict["microstructure"]["filepath"] = "microstructure.h5"
             datasetname: str = self.inputs.microstructure.datasetname.value
             with folder.open("microstructure.h5", "bw") as f_dest:
                 with h5File(f_dest, "w") as h5_dest:
-                    with self.inputs.microstructure.file.open(mode="rb") as f_src:
+                    with open(self.inputs.microstructure.file.get_remote_path(), mode="rb") as f_src:
                         with h5File(f_src, "r") as h5_src:
                             h5_src.copy(datasetname, h5_dest, name=datasetname)
-
-            # input.json as dict
-            input_dict = make_input_dict(self)
-            input_dict["microstructure"]["filepath"] = "microstructure.h5"
-            # write input.json to working directory
-            with folder.open(self.options.input_filename, "w", "utf8") as json:
-                dump(input_dict, json, indent=4)
+        with folder.open(self.options.input_filename, "w", "utf8") as json:
+            dump(input_dict, json, indent=4)
 
         # Specifying the code info:
         codeinfo = CodeInfo()

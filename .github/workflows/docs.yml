@@ -1,0 +1,22 @@
+name: Docs
+
+on:
+  release:
+   types: [ released ]
+
+jobs:
+  build:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up Pixi
+        uses: prefix-dev/setup-pixi@v0.9.0
+        with:
+          pixi-version: v0.55.0
+          environments: docs
+          activate-environment: true
+      - name: Build docs
+        run: pixi run deploy

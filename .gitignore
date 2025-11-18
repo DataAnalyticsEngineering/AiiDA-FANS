@@ -188,9 +188,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Sphinx documentation
-docs/build/
-
 # Auto-generated during builds
 _version.py
 
@@ -202,10 +199,11 @@ diff.md
 
 # Project specific files
 *.h5
-!tutorial_dataset.h5
+!ms-example.h5
 *.yaml
-!.readthedocs.yml
 !.pre-commit-config.yaml
+*.yml
+!mkdocs.yml
 
 # Ignore AiiDA specific files
 .aiida_run

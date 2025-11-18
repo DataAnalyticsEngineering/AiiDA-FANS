@@ -1,0 +1,81 @@
+site_name: AiiDA-FANS
+copyright: Copyright &copy; 2025 Institut für Mechanik | Universität Stuttgart
+site_url: https://dataanalyticsengineering.github.io/AiiDA-FANS/
+repo_url: https://github.com/DataAnalyticsEngineering/AiiDA-FANS
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  logo: assets/aiida-fans-logo.png
+  favicon: assets/aiida-fans-logo.png
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: yellow
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.footer
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - content.action.edit
+
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/DataAnalyticsEngineering/AiiDA-FANS
+    - icon: material/email
+      link: mailto:ethan.shanahan@gmail.com
+
+markdown_extensions:
+  - abbr
+  - footnotes
+  - admonition
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.betterem
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.highlight:
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Introduction:
+    - Getting Started: introduction/getting-started.md
+    - Installing the Plugin: introduction/installing-the-plugin.md
+    - Adding Microstructure Data: introduction/adding-microstructure-data.md
+    - Running FANS: introduction/running-fans.md
+    - Analysing Results: introduction/analysing-results.md
+  - Tutorial:
+    - Installing the Tutorial: tutorial/installing-the-tutorial.md
+    - Using the Tutorial: tutorial/using-the-tutorial.md
+  - Reference:
+    - Plugin API: reference/plugin-api.md
+    - Utilities API: reference/utils-api.md
+  - License: lgpl-attachment.md

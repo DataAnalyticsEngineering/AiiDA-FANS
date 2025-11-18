@@ -1,69 +1,54 @@
+# AiiDA-FANS
 
-# aiida-fans
-
-[![PyPI Package][pypi-badge]][pypi-link]
+[![Release][release-badge]][release-link]
+[![Downloads][conda-badge]][conda-link]
+[![License][license-badge]][license-link]
 [![Docs Status][docs-badge]][docs-link]
-[![Build Status][ci-badge]][ci-link]
 
-This is a plugin for [AiiDA][aiida-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
+> [!WARNING]  
+> The AiiDA-FANS plugin is under active development. Changes can and do occur regularly.
 
-The design goals of this plugin are primarily to provide as simplistic a user experience as is reasonably possible. Secondarily, more featureful additions will be made to extend the users' options for queryability and optimisation.
+This is a plugin for [AiiDA][AiiDA-link] that facilitates the use of [FANS][FANS-link]. FANS is an FFT-based homogenisation solver for microscale and multiphysics problems. It is an open-source project under active development at the Institute of Applied Mechanics, University of Stuttgart. This plugin aims to bring the full value of provenance tracking and database integration to the results produced by FANS.
 
-## Upcoming
-**Please note:** This plugin is currently in the planning stage of development, with substantial contributions coming soon.
-
-### Pre-launch
-- [x] basic functionality capable of completing the example simulations presented by FANS with minimal database integration
-- [x] documentation hosted on aiida-fans.readthedocs.io
-- [x] documentation outline
-- [x] publish package on PyPI
-
-### Post-launch
-- [ ] documentation expansion
-- [ ] input validation developed in cooperation with the FANS team
-- [ ] file sharing optimisations
-- [ ] greater database integration via output analysis/extraction
+The design goals of this plugin are to provide a simple but powerful user interface to FANS. In doing so, the plugin packages additional utilities to eliviate some of the burdens we perceive in the traditional AiiDA workflow.
 
 ## Installation
-The plugin is currently unavailable via PyPI at this stage in development, but it is intended to be published upon an upcoming functional release.
 
-The package can always be installed by cloning this repository and installing it locally like so...
+AiiDA-FANS is available on the conda-forge package channel. Our recommended method of installing AiiDA-FANS is to use the [Pixi][Pixi-link] package manager, in which case `pixi add aiida-fans` will add the plugin to your project manifest (such as a pyproject.toml).
 
-```bash
-$ pip install ./aiida-fans
-```
+Otherwise, the package can be installed with conda by `conda install aiida-fans --channel conda-forge`.
 
-You must also ensure that FANS, AiiDA, and their various dependencies are installed. Please consult the [FANS repository][FANS-link] and the [AiiDA installation][aiida-install-link] guide for more information.
+In any case, the user is responsible for installing FANS and ensuring it is accessible to the plugin. This can be achieved without need for further customisation by having FANS accessible on the PATH environment variable. Please consult the [FANS repository][FANS-link] for more information on the installation of this software.
 
-## Contributing
+## Usage
 
-### Development
-1. Branch off `dev` with a name appropriate for what you are working on (e.g. `feat/myfeature` or `bug/badbug`).
-2. Implement, commit, and push your changes.
-3. Open a Pull Request `dev ← feat/myfeature`, then merge and delete.
+To use this plugin, you must first establish an AiiDA profile, computer, and code. For help on how to do this please refer to the [AiiDA installation][AiiDA-install-link] guide.
 
-### Release
-1. Open a Pull Request `main ← dev`, then squash and merge.
-2. Draft a new Release, named after the release version (e.g. v1.2.3).
-3. Create and assaign a new Tag, identically named.
-3. Generate release notes and publish.
+For general information on the usage of AiiDA you should refer to the [AiiDA documentation][AiiDA-docs-link], and for the usage of FANS refer to its [repository][FANS-link].
+
+This plugin offers some utilities to help smooth the AiiDA user experience. Namely, the `utils.execute_fans` function which allows you to provide the inputs for a job as a dictionary of mostly pythonic values. This utility will parse these inputs and automatically use any appropriate existing nodes it finds in your profile before making new nodes where necessary. For more information on this plugin's specifics and how to use the utilities, please refer to the [documentation][docs-link].
+
+## Tutorial
+
+A tutorial accompanies this plugin. To try it out: clone this repository, cd into it, run `pixi shell -e tutorial` and `pixi run tutorial`. The marimo notebook should be served locally. For more information before you begin, take a look at the [documentation][tutorial-docs-link].
 
 ## Contact
 
-You can contact ethan.shanahan@gmail.com with regard to this plugin specifically.
+You can contact <ethan.shanahan@gmail.com> with any questions regarding the AiiDA-FANS plugin and accompanying tutorial.
 
 <!-- URLs -->
-[pypi-badge]: https://badge.fury.io/py/aiida-fans.svg
-[pypi-link]: https://badge.fury.io/py/aiida-fans
-[release-badge]: https://img.shields.io/github/v/release/ethan-shanahan/aiida-fans?include_prereleases
-[release-link]: https://github.com/ethan-shanahan/aiida-fans/releases
-[ci-badge]: https://github.com/ethan-shanahan/aiida-fans/actions/workflows/ci.yml/badge.svg?branch=main
-[ci-link]: https://github.com/ethan-shanahan/aiida-fans/actions
-[cov-badge]: https://coveralls.io/repos/github/ethan-shanahan/aiida-fans/badge.svg?branch=main
-[cov-link]: https://coveralls.io/github/ethan-shanahan/aiida-fans?branch=main
-[docs-badge]: https://readthedocs.org/projects/aiida-fans/badge
-[docs-link]: http://aiida-fans.readthedocs.io/
+[release-badge]: https://img.shields.io/github/v/release/dataanalyticsengineering/AiiDA-FANS?label=Release
+[release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
+[conda-badge]: https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads
+[conda-link]: https://anaconda.org/conda-forge/aiida-fans
+[license-badge]: https://img.shields.io/github/license/dataanalyticsengineering/AiiDA-FANS?label=License
+[license-link]: https://www.gnu.org/licenses/lgpl-3.0.en.html
+[docs-badge]: https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg
+[docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/
 
-[aiida-link]: https://www.aiida.net/
-[aiida-install-link]: https://aiida.readthedocs.io/projects/aiida-core/en/latest/installation/index.html
+[tutorial-docs-link]: https://dataanalyticsengineering.github.io/AiiDA-FANS/tutorial/installation/
+[AiiDA-link]: https://www.aiida.net/
+[AiiDA-docs-link]: https://aiida-core.readthedocs.io/
+[AiiDA-install-link]: https://aiida.readthedocs.io/projects/aiida-core/en/latest/installation/index.html
 [FANS-link]: https://github.com/DataAnalyticsEngineering/FANS
+[Pixi-link]: https://pixi.sh/latest/

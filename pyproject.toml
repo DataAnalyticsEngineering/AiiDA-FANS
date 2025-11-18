@@ -2,8 +2,8 @@
 name = "aiida-fans"
 dynamic = ["version"]
 description = "AiiDA plugin for FANS, an FFT-based homogenization solver."
-urls = {Documentation = "http://aiida-fans.readthedocs.io/en/latest/", Source = "https://github.com/ethan-shanahan/aiida-fans" }
-authors = [{name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com"}]
+urls = { Documentation = "https://dataanalyticsengineering.github.io/AiiDA-FANS/", Source = "https://github.com/DataAnalyticsEngineering/AiiDA-FANS" }
+authors = [{ name = "Ethan Shanahan", email = "ethan.shanahan@gmail.com" }]
 readme = "README.md"
 license = "LGPL-3.0-or-later"
 license-files = ["LICENSE"]
@@ -13,14 +13,10 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: Science/Research",
     "Development Status :: 3 - Alpha",
-    "Framework :: AiiDA"
+    "Framework :: AiiDA",
 ]
 keywords = ["aiida", "fans", "plugin"]
 requires-python = ">=3.11"
-dependencies = [
-    "aiida-core>=2.6",
-    "h5py"
-]
 
 # Entry Points
 [project.entry-points."aiida.calculations"]
@@ -37,72 +33,75 @@ build-backend = "setuptools.build_meta"
 # Tools
 
 ## Project Tools: pixi
-[tool.pixi.project]
+[tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64"]
 
-### pixi: features
-[tool.pixi.feature.py3]
-dependencies = {python = "3.*"}
-[tool.pixi.feature.build]
-pypi-dependencies = {build = "*"}
-tasks = {build-dist = "python -m build"}
-[tool.pixi.feature.sphinx]
-dependencies = {sphinx = "*", sphinx-book-theme = "*"}
-tasks = {build-docs = "sphinx-build -M html docs/source docs/build"}
-[tool.pixi.feature.marimo]
-dependencies = {marimo = "0.14.*"}
-tasks = {tutorial = "marimo edit tutorial.py"}
-[tool.pixi.feature.fans]
-dependencies = {fans = "0.4.*"}
-
-### pixi: default environment dependencies
+### pixi: default feature
 [tool.pixi.dependencies]
-aiida-core = "2.6.*"
-h5py = "*"
-pre-commit = "*"
+aiida-core = ">=2.7.1,<3"
+h5py = ">=3.9.0,<4"
+pre-commit = ">=4.3.0,<5"
 [tool.pixi.pypi-dependencies]
 aiida-fans = { path = ".", editable = true }
 
+[tool.pixi.tasks]
+rabbit_start = "rabbitmq-server -detached"
+daemon_start = "verdi daemon start"
+start = [{ task = "rabbit_start" }, { task = "daemon_start" }]
+daemon_stop = "verdi daemon stop"
+rabbit_stop = "rabbitmqctl stop"
+stop = [{ task = "daemon_stop" }, { task = "rabbit_stop" }]
+
+### pixi: extra features
+[tool.pixi.feature.py3]
+dependencies = { python = "3.*" }
+[tool.pixi.feature.build]
+pypi-dependencies = { build = "*" }
+tasks = { build-dist = "python -m build" }
+[tool.pixi.feature.mkdocs]
+dependencies = { mkdocs-material = "*" }
+tasks = { serve = "mkdocs serve --watch-theme", deploy = "mkdocs gh-deploy" }
+[tool.pixi.feature.marimo]
+pypi-dependencies = { marimo = ">=0.16.2, <0.17" }
+tasks = { tutorial = "marimo edit tutorial.py" }
+
+
 ### pixi: environments
 [tool.pixi.environments]
-dist = { no-default-feature = true, features = ["py3", "build"] } # CI env
-docs = { no-default-feature = true, features = ["py3", "sphinx"] } # CI env
-tutorial = { features = ["marimo", "fans"] }
+tutorial = { features = ["marimo"] }  # User env
+dist = { no-default-feature = true, features = ["py3", "build"] }  # CI env
+docs = { no-default-feature = true, features = ["py3", "mkdocs"] }  # Docs Dev/CI env
 
 
 ## Build Tools: setuptools_scm
 [tool.setuptools_scm]
 version_file = "src/aiida_fans/_version.py"
 
-
 ## Style Tools: ruff
 [tool.ruff]
 extend-exclude = [
     "conf.py",
-    "tutorial.py"
+    "tutorial.py",
 ]
 line-length = 120
 [tool.ruff.lint]
 ignore = [
-    'PLR2004',  # Magic value used in comparison
-    "D417"  # Documentation for every function parameter
+    "PLR2004",  # Magic value used in comparison
+    "D417",  # Documentation for every function parameter
 ]
 select = [
-    'E',  # pydocstyle
-    'W',  # pydocstyle
+    "E",  # pydocstyle
+    "W",  # pydocstyle
     "D",  # pydocstyle
-    'F',  # pyflakes
-    'I',  # isort
-    'N',  # pep8-naming
-    'PLC',  # pylint-convention
-    'PLE',  # pylint-error
-    'PLR',  # pylint-refactor
-    'PLW',  # pylint-warning
-    'RUF'  # ruff
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "PLC",  # pylint-convention
+    "PLE",  # pylint-error
+    "PLR",  # pylint-refactor
+    "PLW",  # pylint-warning
+    "RUF",  # ruff
 ]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"  # Allow unused variables when underscore-prefixed.
-pydocstyle = {convention = "google"}
-
-## Docs Tools: sphinx
-# None
+pydocstyle = { convention = "google" }
