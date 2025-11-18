@@ -47,7 +47,7 @@ class FansCalculation(CalcJob):
         ## Problem Type and Material Model
         spec.input("problem_type", valid_type=Str)
         spec.input("strain_type", valid_type=Str)
-        spec.input_namespace("materials", dynamic=True, valid_type=MaterialDict)
+        spec.input("materials", valid_type=List)
         ## Solver Settings
         spec.input("FE_type", valid_type=Str)
         spec.input("method", valid_type=Str)
