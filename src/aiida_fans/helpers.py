@@ -17,9 +17,8 @@ def make_input_dict(job: CalcJob) -> dict[str, Any]:
         },
         ## Problem type and material model
         "problem_type": job.inputs.problem_type.value,
-        "matmodel": job.inputs.matmodel.value,
         "strain_type": job.inputs.strain_type.value,
-        "material_properties": job.inputs.material_properties.get_dict(),
+        "materials": job.inputs.materials.get_list(),
         ## Solver settings
         "FE_type": job.inputs.FE_type.value,
         "method": job.inputs.method.value,
