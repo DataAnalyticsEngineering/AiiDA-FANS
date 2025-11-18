@@ -33,7 +33,7 @@ build-backend = "setuptools.build_meta"
 # Tools
 
 ## Project Tools: pixi
-[tool.pixi.project]
+[tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64"]
 
