@@ -26,10 +26,6 @@ The writing of a research paper regarding the AiiDA-FANS plugin is underway. Unt
 
         Leuschner, M., Fritzen, F. Fourier-Accelerated Nodal Solvers (FANS) for homogenization problems. Comput Mech 62, 359–392 (2018). https://doi.org/10.1007/s00466-017-1501-5
 
-## Acknowledgments
-
-TODO: Who do we acknowledge?
-
 <!-- URLs -->
 [release-badge]: https://img.shields.io/github/v/release/dataanalyticsengineering/AiiDA-FANS?label=Release
 [release-link]: https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest
