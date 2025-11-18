@@ -1,5 +1,8 @@
 # Plugin API
 
+!!! info
+    More information coming soon.
+
 ## `FansCalculation`
 
 ### Metadata Ports

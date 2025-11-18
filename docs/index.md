@@ -5,10 +5,9 @@
 [![License][license-badge]][license-link]
 [![Docs Status][docs-badge]][docs-link]
 
-An [AiiDA](https://www.aiida.net/) plugin to integrate with [FANS](https://github.com/DataAnalyticsEngineering/FANS). Use the Fourier-Accelerated Nodal Solver (FANS) to calculate microscale multiphysics problems with the automated data tracking of AiiDA. FANS is an efficient, parallelised, FFT-based homogenisation solver, making AiiDA ideal to manage its very high throughput capabilities. The AiiDA-FANS plugin is an open-source project developed at the Institute of Applied Mechanics, Univeristy of Stuttgart, in association with the developers of FANS.
+!!! abstract "Supports FANS v0.6.0"
 
-!!! warning
-    AiiDA-FANS is under active development and should be considered in alpha. Breaking changes will occur.
+An [AiiDA](https://www.aiida.net/) plugin to integrate with [FANS](https://github.com/DataAnalyticsEngineering/FANS). Use the Fourier-Accelerated Nodal Solver (FANS) to calculate microscale multiphysics problems with the automated data tracking of AiiDA. FANS is an efficient, parallelised, FFT-based homogenisation solver, making AiiDA ideal to manage its very high throughput capabilities. The AiiDA-FANS plugin is an open-source project developed at the Institute of Applied Mechanics, Univeristy of Stuttgart, in association with the developers of FANS.
 
 ## How to Cite
 

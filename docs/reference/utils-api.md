@@ -1,5 +1,8 @@
 # Utilities API
 
+!!! info
+    More information coming soon.
+
 ## `execute_fans()`
 
 ## `run_fans()`

@@ -74,4 +74,6 @@ results_dict.get_dict()
   }}}
 ```
 
-<!-- ## Querying the Data -->
+## Querying the Data
+
+The AiiDA ^^database^^ is responsible for storing the provenance graph and is the primary way you interact with the data. For a guide on how to use AiiDA's query system, please refer to the [finding and querying how-to](https://aiida.readthedocs.io/projects/aiida-core/en/stable/howto/query.html#how-to-query). This offers valuable information on the current state of the `QueryBuilder` and points to more advanced topics also.

@@ -49,6 +49,9 @@ markdown_extensions:
   - abbr
   - footnotes
   - admonition
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
   - pymdownx.details
   - pymdownx.betterem
   - pymdownx.tabbed:
