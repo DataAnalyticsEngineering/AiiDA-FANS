@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://aiida-fans.readthedocs.io/en/latest/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/</loc>
+         <lastmod>2025-11-19</lastmod>
     </url>
     <url>
-         <loc>https://aiida-fans.readthedocs.io/en/latest/installation/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/lgpl-attachment/</loc>
+         <lastmod>2025-11-19</lastmod>
     </url>
     <url>
-         <loc>https://aiida-fans.readthedocs.io/en/latest/license/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/adding-microstructure-data/</loc>
+         <lastmod>2025-11-19</lastmod>
     </url>
     <url>
-         <loc>https://aiida-fans.readthedocs.io/en/latest/usage/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/analysing-results/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/getting-started/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/installing-the-plugin/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/running-fans/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/reference/plugin-api/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/reference/utils-api/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/tutorial/installing-the-tutorial/</loc>
+         <lastmod>2025-11-19</lastmod>
+    </url>
+    <url>
+         <loc>https://dataanalyticsengineering.github.io/AiiDA-FANS/tutorial/using-the-tutorial/</loc>
+         <lastmod>2025-11-19</lastmod>
     </url>
 </urlset>

@@ -8,29 +8,31 @@
       
       
       
-        <link rel="canonical" href="https://dataanalyticsengineering.github.io/AiiDA-FANS/">
+        <link rel="canonical" href="https://dataanalyticsengineering.github.io/AiiDA-FANS/introduction/running-fans/">
       
       
+        <link rel="prev" href="../adding-microstructure-data/">
       
-        <link rel="next" href="introduction/getting-started/">
+      
+        <link rel="next" href="../analysing-results/">
       
       
         
       
       
-      <link rel="icon" href="assets/aiida-fans-logo.png">
+      <link rel="icon" href="../../assets/aiida-fans-logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>AiiDA-FANS</title>
+        <title>Running FANS - AiiDA-FANS</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +51,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#aiida-fans" class="md-skip">
+        <a href="#running-fans" class="md-skip">
           Skip to content
         </a>
       
@@ -90,9 +92,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="AiiDA-FANS" class="md-header__button md-logo" aria-label="AiiDA-FANS" data-md-component="logo">
+    <a href="../.." title="AiiDA-FANS" class="md-header__button md-logo" aria-label="AiiDA-FANS" data-md-component="logo">
       
-  <img src="assets/aiida-fans-logo.png" alt="logo">
+  <img src="../../assets/aiida-fans-logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -109,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Running FANS
             
           </span>
         </div>
@@ -227,9 +229,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="AiiDA-FANS" class="md-nav__button md-logo" aria-label="AiiDA-FANS" data-md-component="logo">
+    <a href="../.." title="AiiDA-FANS" class="md-nav__button md-logo" aria-label="AiiDA-FANS" data-md-component="logo">
       
-  <img src="assets/aiida-fans-logo.png" alt="logo">
+  <img src="../../assets/aiida-fans-logo.png" alt="logo">
 
     </a>
     AiiDA-FANS
@@ -253,37 +255,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -299,37 +274,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-cite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How to Cite
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -338,8 +282,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -362,11 +308,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -387,7 +333,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -405,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="introduction/getting-started/" class="md-nav__link">
+      <a href="../getting-started/" class="md-nav__link">
         
   
   
@@ -433,7 +379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="introduction/installing-the-plugin/" class="md-nav__link">
+      <a href="../installing-the-plugin/" class="md-nav__link">
         
   
   
@@ -461,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="introduction/adding-microstructure-data/" class="md-nav__link">
+      <a href="../adding-microstructure-data/" class="md-nav__link">
         
   
   
@@ -486,10 +432,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="introduction/running-fans/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running FANS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -505,6 +478,48 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-challenging-standard-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Challenging Standard Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-utilities-instead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Utilities Instead
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -517,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="introduction/analysing-results/" class="md-nav__link">
+      <a href="../analysing-results/" class="md-nav__link">
         
   
   
@@ -610,7 +625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorial/installing-the-tutorial/" class="md-nav__link">
+      <a href="../../tutorial/installing-the-tutorial/" class="md-nav__link">
         
   
   
@@ -638,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorial/using-the-tutorial/" class="md-nav__link">
+      <a href="../../tutorial/using-the-tutorial/" class="md-nav__link">
         
   
   
@@ -731,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/plugin-api/" class="md-nav__link">
+      <a href="../../reference/plugin-api/" class="md-nav__link">
         
   
   
@@ -759,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/utils-api/" class="md-nav__link">
+      <a href="../../reference/utils-api/" class="md-nav__link">
         
   
   
@@ -794,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="lgpl-attachment/" class="md-nav__link">
+      <a href="../../lgpl-attachment/" class="md-nav__link">
         
   
   
@@ -841,10 +856,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-cite" class="md-nav__link">
+  <a href="#the-challenging-standard-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How to Cite
+        The Challenging Standard Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-utilities-instead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Utilities Instead
       
     </span>
   </a>
@@ -868,7 +894,7 @@
 
 
   
-    <a href="https://github.com/DataAnalyticsEngineering/AiiDA-FANS/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/DataAnalyticsEngineering/AiiDA-FANS/edit/main/docs/introduction/running-fans.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -876,32 +902,65 @@
   
 
 
-<h1 id="aiida-fans">AiiDA-FANS</h1>
-<p><a href="https://github.com/dataanalyticsengineering/AiiDA-FANS/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/dataanalyticsengineering/AiiDA-FANS?label=Release" /></a>
-<a href="https://anaconda.org/conda-forge/aiida-fans"><img alt="Downloads" src="https://img.shields.io/conda/dn/conda-forge/aiida-fans?label=Downloads" /></a>
-<a href="https://www.gnu.org/licenses/lgpl-3.0.en.html"><img alt="License" src="https://img.shields.io/github/license/dataanalyticsengineering/AiiDA-FANS?label=License" /></a>
-<a href="https://dataanalyticsengineering.github.io/AiiDA-FANS/"><img alt="Docs Status" src="https://github.com/dataanalyticsengineering/AiiDA-FANS/actions/workflows/docs.yml/badge.svg" /></a></p>
-<div class="admonition abstract">
-<p class="admonition-title">Supports FANS v0.6.0</p>
-</div>
-<p>An <a href="https://www.aiida.net/">AiiDA</a> plugin to integrate with <a href="https://github.com/DataAnalyticsEngineering/FANS">FANS</a>. Use the Fourier-Accelerated Nodal Solver (FANS) to calculate microscale multiphysics problems with the automated data tracking of AiiDA. FANS is an efficient, parallelised, FFT-based homogenisation solver, making AiiDA ideal to manage its very high throughput capabilities. The AiiDA-FANS plugin is an open-source project developed at the Institute of Applied Mechanics, Univeristy of Stuttgart, in association with the developers of FANS.</p>
-<h2 id="how-to-cite">How to Cite</h2>
-<p>The writing of a research paper regarding the AiiDA-FANS plugin is underway. Until the time that it is published, please consider if it may be relevant to instead cite one of the following papers.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="aiida" name="__tabbed_1" type="radio" /><input id="fans" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="aiida">AiiDA</label><label for="fans">FANS</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="admonition quote">
-<p>Sebastiaan. P. Huber, Spyros Zoupanos, Martin Uhrin, Leopold Talirz, Leonid Kahle, Rico Häuselmann, Dominik Gresch, Tiziano Müller, Aliaksandr V. Yakutovich, Casper W. Andersen, Francisco F. Ramirez, Carl S. Adorf, Fernando Gargiulo, Snehal Kumbhar, Elsa Passaro, Conrad Johnston, Andrius Merkys, Andrea Cepellotti, Nicolas Mounet, Nicola Marzari, Boris Kozinsky, and Giovanni Pizzi, AiiDA 1.0, a scalable computational infrastructure for automated reproducible workflows and data provenance, Scientific Data 7, 300 (2020); DOI: 10.1038/s41597-020-00638-4</p>
-</div>
-</div>
-<div class="tabbed-block">
-<div class="admonition quote">
-<p>Leuschner, M., Fritzen, F. Fourier-Accelerated Nodal Solvers (FANS) for homogenization problems. Comput Mech 62, 359–392 (2018). https://doi.org/10.1007/s00466-017-1501-5</p>
-</div>
-</div>
-</div>
-</div>
-<!-- URLs -->
+<h1 id="running-fans">Running FANS</h1>
+<p>In this section, we will briefly demonstrate how to use the plugin's special utilities to easily run a FANS calculation. For general information on the usage of AiiDA you should refer to the <a href="https://aiida-core.readthedocs.io/">AiiDA documentation</a>, and for the usage of FANS refer to its <a href="https://github.com/DataAnalyticsEngineering/FANS">repository</a>.</p>
+<h2 id="the-challenging-standard-workflow">The Challenging Standard Workflow</h2>
+<p>This plugin offers some utilities to help smooth the AiiDA user experience. Namely, the <code>utils.execute_fans</code> function which allows you to provide the inputs for a job as a dictionary of mostly pythonic values. This utility will parse these inputs and automatically use any appropriate existing nodes it finds in your profile before making new nodes where necessary. This is the biggest difference between the standard AiiDA usage pattern and what we offer with Utilities. Ordinarily, it is very easy to end up unintentionally creating duplicate input nodes, resulting in a bloated and disconnected graph of work, without navigating the cumbersome query functions. Utilities aims to free us of this inconvenience. It opperates under the assumption that if a duplicate node <em>would</em> be created, then the existing node should be fetched and used instead. This is a very powerful philosophy when stringently adhered to, but breaks down if ignored.</p>
+<p>For example, consider the material model input parameter,</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><span class="nt">&quot;FE_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HEX8&quot;</span>
+</span></code></pre></div>
+<p>In the AiiDA database (i.e. graph), this corresponds to a node of type <code>Str</code> with the value <code>"HEX8"</code>, and optionally we can label it with <code>"FE_type"</code>. When we run a <code>FansCalculation</code> job it must receive a <code>Str</code> node for the <em>FE_type</em> input. If a pythonic <code>str</code> is provided instead, AiiDA automatically converts it to an AiiDA <code>Str</code> and stores the node in the database. Doing it this way, if you run five simulations using hexahedral elements (HEX8), you will end up with five identical unlabeled <code>Str</code> nodes in your database, each pointing to a different <code>CalcJob</code> node. Clearly, the better option would be to have one <code>Str</code> node point to five <code>CalcJob</code> nodes. This could be done by providing each invocation of the <code>FansCalculation</code> job with the same node. So you either have to memorise the primary key of the <code>Str</code> node valued <code>"HEX8"</code>, or construct a query to fetch it. In this case, the query appears simple enough,</p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><span class="n">QueryBuilder</span><span class="p">()</span>
+</span><span id="__span-1-2"><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">Str</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+</span><span id="__span-1-3"><span class="o">.</span><span class="n">add_filter</span><span class="p">(</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;==&quot;</span><span class="p">:</span> <span class="s2">&quot;HEX8&quot;</span><span class="p">}})</span>
+</span><span id="__span-1-4"><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+<p>but there are dangers herein since if another input parameter happens to have the same value, they would both be fetched. To get around this, you would need to have the foresight to label each node appropriately. Additionally, different data types have different query interfaces, making the overall user experience a challenge.</p>
+<h2 id="using-utilities-instead">Using Utilities Instead</h2>
+<p>In comes the <code>utils.execute_fans</code> function. With this function, you can provide the input parameters of FANS as basic pythonic values in a dictionary (with some nuances). Here is what a script to run FANS might look like,</p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><span class="kn">from</span><span class="w"> </span><span class="nn">aiida</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_profile</span>
+</span><span id="__span-2-2"><span class="kn">from</span><span class="w"> </span><span class="nn">aiida.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_code</span><span class="p">,</span> <span class="n">load_node</span>
+</span><span id="__span-2-3"><span class="kn">from</span><span class="w"> </span><span class="nn">aiida_fans.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_fans</span>
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="n">load_profile</span><span class="p">()</span>
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="c1">################################################################################</span>
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-2-10">    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">load_code</span><span class="p">(</span><span class="s2">&quot;FANS&quot;</span><span class="p">),</span>  <span class="c1"># Code node goes here.</span>
+</span><span id="__span-2-11">    <span class="c1"># Microstructure definition</span>
+</span><span id="__span-2-12">    <span class="s2">&quot;microstructure&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-2-13">        <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">load_node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;microstructure.file&quot;</span><span class="p">),</span>  <span class="c1"># MS node goes here.</span>
+</span><span id="__span-2-14">        <span class="s2">&quot;datasetname&quot;</span><span class="p">:</span> <span class="s2">&quot;/dset_0/image&quot;</span><span class="p">,</span>
+</span><span id="__span-2-15">        <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span id="__span-2-16">    <span class="p">},</span>
+</span><span id="__span-2-17">    <span class="c1"># Problem type and material model</span>
+</span><span id="__span-2-18">    <span class="s2">&quot;problem_type&quot;</span><span class="p">:</span> <span class="s2">&quot;mechanical&quot;</span><span class="p">,</span>
+</span><span id="__span-2-19">    <span class="s2">&quot;matmodel&quot;</span><span class="p">:</span> <span class="s2">&quot;LinearElasticIsotropic&quot;</span><span class="p">,</span>
+</span><span id="__span-2-20">    <span class="s2">&quot;strain_type&quot;</span><span class="p">:</span> <span class="s2">&quot;small&quot;</span><span class="p">,</span>
+</span><span id="__span-2-21">    <span class="s2">&quot;material_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-2-22">        <span class="s2">&quot;bulk_modulus&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">62.5000</span><span class="p">,</span> <span class="mf">222.222</span><span class="p">],</span>
+</span><span id="__span-2-23">        <span class="s2">&quot;shear_modulus&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">28.8462</span><span class="p">,</span> <span class="mf">166.6667</span><span class="p">],</span>
+</span><span id="__span-2-24">    <span class="p">},</span>
+</span><span id="__span-2-25">    <span class="c1"># Solver settings</span>
+</span><span id="__span-2-26">    <span class="s2">&quot;FE_type&quot;</span><span class="p">:</span> <span class="s2">&quot;HEX8&quot;</span><span class="p">,</span>
+</span><span id="__span-2-27">    <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;cg&quot;</span><span class="p">,</span>
+</span><span id="__span-2-28">    <span class="s2">&quot;error_parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-2-29">        <span class="s2">&quot;measure&quot;</span><span class="p">:</span> <span class="s2">&quot;Linfinity&quot;</span><span class="p">,</span>
+</span><span id="__span-2-30">        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;absolute&quot;</span><span class="p">,</span>
+</span><span id="__span-2-31">        <span class="s2">&quot;tolerance&quot;</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">,</span>
+</span><span id="__span-2-32">    <span class="p">},</span>
+</span><span id="__span-2-33">    <span class="s2">&quot;n_it&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-2-34">    <span class="c1"># Macroscale loading conditions</span>
+</span><span id="__span-2-35">    <span class="s2">&quot;macroscale_loading&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">0.001</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">,</span> <span class="mf">0.0015</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0025</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">]]],</span>
+</span><span id="__span-2-36"><span class="p">}</span>
+</span><span id="__span-2-37">
+</span><span id="__span-2-38"><span class="c1">################################################################################</span>
+</span><span id="__span-2-39">
+</span><span id="__span-2-40"><span class="n">run_fans</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Note that the <code>inputs</code> dictionary closely resembles the input json required by FANS, with two exceptions. These are: the addition of the <code>"code": load_code("FANS")</code> entry which is an additional requirement of running any AiiDA <code>CalcJob</code>, and the <code>"microstructure": {"filepath": "path/to/ms.h5", ...</code> entry which has changed to <code>"microstructure": {"file": load_node(label="microstructure.file"), ...</code> according to the section on <a href="../adding-microstructure-data/">Adding Microstructure Data</a>. The final function call to <code>run_fans</code> is analogous to the AiiDA <code>run</code> function, and there exists a corresponding <code>submit_fans</code> function too.</p>
+<p>The utilities function will first check each non-node entry in the dictionary and try to find an existing node whose value matches that which was provided and whose label matches the dictionary key of that input (using dot notation for embedded dictionaries). Additionally, if there exists a calculation whose inputs perfectly match the inputs provided, confirmation to proceed will be sought.</p>
 
 
 
@@ -936,15 +995,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
+          
+          <a href="../adding-microstructure-data/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Adding Microstructure Data">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Adding Microstructure Data
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="introduction/getting-started/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started">
+          <a href="../analysing-results/" class="md-footer__link md-footer__link--next" aria-label="Next: Analysing Results">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Getting Started
+                Analysing Results
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1011,10 +1086,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.indexes", "navigation.footer", "navigation.top", "toc.follow", "search.suggest", "content.action.edit"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.indexes", "navigation.footer", "navigation.top", "toc.follow", "search.suggest", "content.action.edit"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
     
   </body>
